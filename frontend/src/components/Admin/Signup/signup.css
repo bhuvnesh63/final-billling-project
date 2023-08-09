@@ -1,0 +1,15 @@
+.signup-form{
+    width: 50%;
+    /* border: 2px solid black; */
+    margin: auto !important;
+}
+/* .inputs-feilds{} */
+
+.form-divs{
+    padding: 60px;
+    border: 1px solid;
+    margin: auto !important;
+    width: 90%;
+
+  
+  }

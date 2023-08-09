@@ -1,0 +1,51 @@
+.form-div {
+  padding: 10px;
+  /* border: 1px solid rgb(222, 219, 219); */
+  /* border-color:  rgb(202, 194, 194) !important; */
+  border: 1px solid;
+  margin: auto !important;
+  width: 89%;
+
+}
+
+.main-col {
+  width: 90%;
+  margin-top: 20px;
+
+}
+
+.cart-buttons {
+  display: flex;
+
+}
+
+.quantity-buttons{
+  display: flex;
+  width: fit-content;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  margin-right: 10px;
+  height: 40px;
+}
+.increment-buttons{
+  font-size: 18px;
+  display: flex;
+  width: 40px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #6b6b6b;
+  &:nth-child(1){
+      border-right: 2px solid rgba(0, 0, 0, 0.2);
+  }
+  &:nth-child(2){
+      width: 60px;
+  }
+  &:nth-child(3){
+      border-left: 2px solid rgba(0, 0, 0, 0.2);
+  }
+}
+
+/* .dasboard-table{
+    border: 1px solid !important;
+
+  } */

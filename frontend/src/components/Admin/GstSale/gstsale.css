@@ -1,0 +1,64 @@
+.head-quantity{
+  padding-top: -10px;
+}
+
+
+.Opretor{
+    width: 100%;
+    height: 38px;
+    /* border-radius: 1px solid gray; */
+    border: 1px solid rgb(197, 195, 195) ;
+    margin-top: -20px;
+    border-radius: 5px;
+  
+}
+
+.decrease{
+    width: 30%;
+    padding-right: 10px;
+    border: none;
+}
+
+.quantity{
+    /* text-align: center !important; */
+    align-items: center !important;
+    /* margin-left: 35px; */
+    /* padding: 0px 15px 0px 15px; */
+}
+
+.increase{
+    width: 30%;
+    margin-left: 60px;
+    border: none;
+
+
+}
+.quantity-buttons{
+    display: flex;
+    width: fit-content;
+    border: 2px solid rgba(0, 0, 0, 0.2);
+    margin-right: 10px;
+    height: 40px;
+  }
+  .increment-buttons{
+    font-size: 18px;
+    display: flex;
+    width: 40px;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #6b6b6b;
+    &:nth-child(1){
+        border-right: 2px solid rgba(0, 0, 0, 0.2);
+    }
+    &:nth-child(2){
+        width: 60px;
+    }
+    &:nth-child(3){
+        border-left: 2px solid rgba(0, 0, 0, 0.2);
+    }
+  }
+
+
+
+  

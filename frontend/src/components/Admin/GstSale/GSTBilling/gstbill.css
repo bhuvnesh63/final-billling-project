@@ -1,0 +1,49 @@
+.bill-table {
+    margin-top: -15px;
+}
+
+.dropdown {
+    width: 35%;
+    height: 40px;
+    margin-left: 120px;
+    margin-top: -25px;
+    display: flex;
+}
+
+.label {
+    font-size: 15px;
+
+}
+
+.gst-bill {
+    border: 1px solid;
+    margin-top: -17px;
+    padding-top: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+
+}
+
+.gst-details {
+    border: 1px solid;
+    border-top: none;
+    width: 97.1% !important;
+    margin-top: -18px !important;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 20px;
+    margin-left: 12px;
+
+}
+
+.gst-table {
+    margin-top: -17px;
+    padding-top: 10px !important;
+
+
+}
+
+.dropdown-select {
+    margin-left: 20px;
+    /* padding-bottom: 15px; */
+}

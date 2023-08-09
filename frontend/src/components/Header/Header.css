@@ -1,0 +1,49 @@
+.nav-container {
+    width: 100%;
+    background-color: #063a41;
+    /* height: 70px; */
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.logo-link{
+    text-decoration: none;
+    font-size: 2rem;
+    font-family: serif;
+    font-weight: bold;
+    color: white;
+    text-align: center !important;
+    justify-content: center !important;
+}
+
+.item-links {
+    text-decoration: none;
+    color: white;
+    padding-left: 20px;
+    font-size: 1.2rem;
+}
+
+.logout-button {
+    background-color: #06C755 !important;
+    color: #fff;
+    border: none !important
+}
+
+
+
+
+
+
+
+
+
+
+
+@media screen and (max-width: 600px) {
+    .nav-container {
+        width: 100%;
+        
+        /* background-image: linear-gradient(rgb(8, 17, 24), rgb(63, 85, 104)); */
+    }
+
+}
