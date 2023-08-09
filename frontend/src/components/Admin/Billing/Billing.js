@@ -84,9 +84,6 @@ const Billing = () => {
                     <Button variant="success" className='float-end' onClick={handlePrint}>
                       Print Bill
                     </Button>
-
-
-            
                   </div>
                 </th>
               </tr>
@@ -95,13 +92,15 @@ const Billing = () => {
         </Row>
       </Container>
 
-      <Container>
+
+
+      {/* <Container> */}
         <Row>
           <Col sm={12}>
-            <div className='form-div' id="print-bill">
+            <div  id="print-bill">
               {/* <div className='form-div'> */}
               <h5 className='gst'>GSTIN : 09IILPS7478M1ZU </h5>
-              <div className='text-center'>
+              <div className='text-center mb-5'>
                 <h4>TAX INVOICE</h4>
                 <h3>M/S V K ENTERPRISES</h3>
                 <p>
@@ -112,7 +111,7 @@ const Billing = () => {
                 </p>
               </div>
 
-              <Container>
+              <Container fluid>
                 <Row>
                   <Col sm={12}>
                     <div className='billing-border'>
@@ -142,7 +141,7 @@ const Billing = () => {
                   </Col>
 
                   <Col sm={6}>
-                    <div className='bill-border'>
+                    <div className='shiped-border'>
                       <p className='text-bold'>Shipped to :</p>
                       <p>
                         Customer Name : <span>{customerName}</span>
@@ -161,7 +160,7 @@ const Billing = () => {
 
                         <thead>
                           <tr className='bill-table'>
-                            <th className='pt-4' >Item Name</th>
+                            <th className='pt-5 mt-4' >Item Name</th>
                             <th>Price without/GST</th>
                             <th>CGST in ₹</th>
                             <th>SGST in ₹</th>
@@ -177,7 +176,7 @@ const Billing = () => {
 
                           {Items?.map((item) => (
                             <tr key={item._id}>
-                              <td>{item.itemName}</td>
+                              <td >{item.itemName}</td>
                               <td>{item.amountWithoutGST}</td>
                               <td>{item.cgstapplied}</td>
                               <td>{item.sgstapplied}</td>
@@ -231,7 +230,7 @@ const Billing = () => {
             {/* </div> */}
           </Col>
         </Row>
-      </Container>
+      {/* </Container> */}
 
       <br /> <br />
     </>
