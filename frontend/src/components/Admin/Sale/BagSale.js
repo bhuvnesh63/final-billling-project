@@ -11,7 +11,7 @@ import { toast } from 'react-toastify';
 
 const ItemsUrl = 'http://localhost:4000/api/v1/items';
 const UnitsURL = 'http://localhost:4000/api/v1/units';
-const SaleOrderUrl = 'http://localhost:4000/api/v1/saleorder/new';
+const SaleOrderUrl = 'http://localhost:4000/api/v1/bagsaleorder/new';
 
 const Sale = () => {
   const [getitems, setGetItems] = useState(null);
@@ -37,6 +37,7 @@ const Sale = () => {
       pricePerItem: '',
       quantity: 0,
       totalPrice: '',
+      grandTotal:'',
     },
   ]);
 
@@ -104,7 +105,7 @@ const Sale = () => {
         ...item,
         price: (item.pcswithQuantity * item.pricePerItem).toFixed(2),
         discountInRupess: (item.price * discountInPercentage / 100),
-        // grandTotal: (item.totalPrice - item.discountInRupess).toFixed(2),
+        grandTotal: (item.price - item.discountInRupess).toFixed(2),
       }))
     );
   };
@@ -197,8 +198,14 @@ const Sale = () => {
           productId: item.productId,
           itemName: item.itemName,
           pricePerItem: item.pricePerItem,
+          pcsToSale: item.pcstoSale, // Passing pcsToSale value here
+          pcswithQuantity: item.pcswithQuantity,
+          unit:unitName,
+          discountInPercentage:discountInPercentage,
+          discountInRupess:item.discountInRupess,
+          price:item.price,
           quantity: item.quantity.toString(),
-          totalPrice: parseFloat(item.totalPrice),
+          totalPrice: parseFloat(item.grandTotal),
           amountWithoutGST: parseFloat(item.pricewithoutgst),
           cgstapplied: parseFloat(item.cgstPerItem),
           sgstapplied: parseFloat(item.sgstPerItem),
@@ -245,6 +252,11 @@ const Sale = () => {
                     <Button className="table-btn" variant="success" onClick={() => navigate("/salelist")} >
                       <IoIosCreate />&nbsp;
                       Check Sale List
+                    </Button>
+
+                    <Button className="table-btn" variant="success" onClick={() => navigate("/unitalelist")} >
+                      <IoIosCreate />&nbsp;
+                      Unit Sale List
                     </Button>
 
                     <Button className="table-btn" variant="success" onClick={() => navigate("/addunit")} >
@@ -526,15 +538,15 @@ const Sale = () => {
                     />
                   </div>
                   <Col sm={2}>
-                    <label className="label">Total Price</label>
+                    <label className="label">Grand total</label>
                     <input
                       type="text"
                       className="form-control"
-                      value={item.totalPrice}
+                      value={item.grandTotal}
                       onChange={(e) => {
                         setItems((prevItems) =>
                           prevItems.map((it, i) =>
-                            i === index ? { ...it, totalPrice: e.target.value } : it
+                            i === index ? { ...it, grandTotal: e.target.value } : it
                           )
                         );
                       }}

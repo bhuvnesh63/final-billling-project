@@ -31,6 +31,8 @@ import AddUnit from './components/Admin/UnitSale/AddUnit';
 import UnitList from './components/Admin/UnitSale/UnitList';
 import UnitHistory from './components/Admin/Transaction/UnitHistory';
 import EditUnit from './components/Admin/UnitSale/Editunit';
+import BagSaleList from './components/Admin/Sale/BagSaleList';
+import UnitBilling from './components/Admin/Unitbilling/unitbilling';
 
 
 
@@ -80,7 +82,8 @@ function App() {
         <Route path='/salehistory' element={<PrivateRoute><Sidebar><SaleHistory/></Sidebar></PrivateRoute>} />
         <Route path='/gstsalehistory' element={<PrivateRoute><Sidebar><GSTSalehistory/></Sidebar></PrivateRoute>} />
         <Route path='/unithistory' element={<PrivateRoute><Sidebar><UnitHistory/></Sidebar></PrivateRoute>} />
-
+        <Route path='/unitalelist' element={<PrivateRoute><Sidebar><BagSaleList/></Sidebar></PrivateRoute>} />
+        <Route path='/unitbilling/:id' element={<PrivateRoute><Sidebar><UnitBilling/></Sidebar></PrivateRoute>} />
       </Routes>
 
     </div>
