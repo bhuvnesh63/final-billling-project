@@ -406,10 +406,12 @@ const Sale = () => {
                       required
                     />
                   </Col>
+                  <hr></hr>
                 </React.Fragment>
+ 
               ))}
 
-
+                         
               <center>
                 <Button className="float-end" variant="success" type="button" onClick={addMoreItems}>
                   Add more
