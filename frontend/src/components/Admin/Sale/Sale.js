@@ -164,6 +164,7 @@ const Sale = () => {
           productId: item.productId,
           itemName: item.itemName,
           pricePerItem: item.pricePerItem,
+          
           discountInPercentage:discountInPercentage,
           discountInRupess:item.discountInRupess,
           quantity: item.quantity.toString(),
@@ -266,6 +267,7 @@ const Sale = () => {
 
               <h5>Product Details</h5>
 
+
               {items.map((item, index) => (
                 <React.Fragment key={index}>
                   <Col sm={2}>
@@ -288,6 +290,7 @@ const Sale = () => {
                       ))}
                     </Form.Select>
                   </Col>
+
                   <div className="col-md-2 position-relative">
                     <label className="label">Total Stock</label>
                     <input
@@ -411,7 +414,21 @@ const Sale = () => {
  
               ))}
 
-                         
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
               <center>
                 <Button className="float-end" variant="success" type="button" onClick={addMoreItems}>
                   Add more

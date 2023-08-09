@@ -13,6 +13,7 @@ const ItemsUrl = 'http://localhost:4000/api/v1/items';
 const AccountUrl = 'http://localhost:4000/api/v1/accounts';
 const GstOrderUrl = 'http://localhost:4000/api/v1/gstorder/new';
 
+
 const GstSale = () => {
   const [getitems, setGetItems] = useState(null);
   const [getaccounts, setGetAccounts] = useState(null);
@@ -21,11 +22,15 @@ const GstSale = () => {
   const [email, setEmail] = useState('');
   const [address, setAddress] = useState('');
   const [gstNumber, setGstNumber] = useState('');
+  const [discountInPercentage, setDiscountInPercentage] = useState("");
   const [items, setItems] = useState([
     {
       _id: '',
       productId: '',
       itemName: '',
+      stock: '',
+      discountInPercentage:'',
+      discountInRupess:'',
       pricewithoutgst: '',
       cgstPerItem: '',
       sgstPerItem: '',
@@ -75,6 +80,8 @@ const GstSale = () => {
         cgstPerItem: (item.initialCgstPerItem * item.quantity).toFixed(2),
         sgstPerItem: (item.initialSgstPerItem * item.quantity).toFixed(2),
         pricewithoutgst: (item.initialamountwithoutgst * item.quantity).toFixed(2),
+        discountInRupess: (item.totalPrice * discountInPercentage/100),
+        grandTotal:(item.totalPrice - item.discountInRupess).toFixed(2),  
       }))
     );
   };
@@ -85,6 +92,29 @@ const GstSale = () => {
 
 
   const getItemPrice = (selectedItemName, index) => {
+    if (!selectedItemName) {
+
+      setItems((prevItems) =>
+        prevItems.map((item, i) =>
+          i === index
+            ? {
+              ...item,
+              productId: '',
+              pricePerItem: '',
+              stock: '',
+              initialCgstPerItem: '',
+              cgstPerItem: '',
+              initialSgstPerItem: '',
+              sgstPerItem: '',
+              pricewithoutgst: '',
+              initialamountwithoutgst: '',
+            }
+            : item
+        )
+      );
+      return;
+    }
+
     const selectedItemObj = getitems?.items?.find(
       (item) => item.itemName === selectedItemName
     );
@@ -118,6 +148,9 @@ const GstSale = () => {
       {
         productId: '',
         itemName: '',
+        stock: '',
+        discountInPercentage:'',
+        discountInRupess:'',
         pricewithoutgst: '',
         cgstPerItem: '',
         sgstPerItem: '',
@@ -142,8 +175,11 @@ const GstSale = () => {
           productId: item.productId,
           itemName: item.itemName,
           pricePerItem: item.pricePerItem,
+          discountInPercentage:discountInPercentage,
+          discountInRupess:item.discountInRupess,
           quantity: item.quantity.toString(),
           totalPrice: parseFloat(item.totalPrice),
+          grandTotal: parseFloat(item.grandTotal),
           amountWithoutGST: parseFloat(item.pricewithoutgst),
           cgstapplied: parseFloat(item.cgstPerItem),
           sgstapplied: parseFloat(item.sgstPerItem),
@@ -198,6 +234,7 @@ const GstSale = () => {
           </Table>
         </Row>
       </Container>
+
 
 
       <div className="form-div">
@@ -281,12 +318,18 @@ const GstSale = () => {
               <hr></hr>
               <h5>Product Details</h5>
 
+
               {items.map((item, index) => (
                 <React.Fragment key={index}>
                   <Col sm={2}>
-                    <label className="label">Item Name </label>
+                    <label className="label"> Item Name </label>
                     <Form.Select
                       onChange={(e) => {
+                        setItems((prevItems) =>
+                        prevItems.map((it, i) =>
+                          i === index ? { ...it, itemName: e.target.value } : it
+                        )
+                      );
                         getItemPrice(e.target.value, index);
                       }}
                     >
@@ -298,6 +341,16 @@ const GstSale = () => {
                       ))}
                     </Form.Select>
                   </Col>
+
+                    <div className="col-md-2 position-relative">
+                    <label className="label">Total Stock</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={item.stock}
+                      readOnly
+                    />
+                    </div>
 
                   <div className="col-md-2 position-relative">
                     <label className="label">Amount without GST</label>
@@ -328,6 +381,30 @@ const GstSale = () => {
                       readOnly
                     />
                   </div>
+
+                   <div className="col-md-2 position-relative">
+                    <label className="label">Discount in %</label>
+                    <input
+                      type="number"
+                      className="form-control"
+                      value={discountInPercentage}
+                      onChange={(e) => setDiscountInPercentage(e.target.value)}
+                    />
+                  </div>
+
+                  <div className="col-md-2 position-relative">
+                    <label className="label">Discount in ₹</label>
+                    <input
+                      type="number"
+                      className="form-control"
+                      value={item.discountInRupess}
+                      
+                    />
+                  </div>
+
+
+
+
 
                   <div className="col-md-2 position-relative">
                     <label className="label">Price per item</label>
@@ -360,8 +437,8 @@ const GstSale = () => {
                     </div>
                   </div>
 
-                  <Col sm={2}>
-                    <label className="label">Total Price </label>
+                  <Col sm={3}>
+                    <label className="label">Price/without discount</label>
                     <input
                       type="text"
                       className="form-control"
@@ -376,8 +453,38 @@ const GstSale = () => {
                       required
                     />
                   </Col>
+
+
+
+                  <Col sm={2}>
+                    <label className="label">Total Price </label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={item.grandTotal}
+                      onChange={(e) => {
+                        setItems((prevItems) =>
+                          prevItems.map((it, i) =>
+                            i === index ? { ...it, grandTotal: e.target.value } : it
+                          )
+                        );
+                      }}
+                      required
+                    />
+                  </Col>
                 </React.Fragment>
               ))}
+
+
+
+
+
+
+
+
+
+
+
 
               <center>
                 <Button

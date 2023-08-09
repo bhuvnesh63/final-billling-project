@@ -42,6 +42,15 @@ const OrderSchema = new mongoose.Schema({
       totalPrice: {
         type: Number,
       },
+      grandTotal: {
+        type: Number,
+      },
+      discountInPercentage: {
+        type: Number,
+      },
+      discountInRupess: {
+        type: Number,
+      },
       amountWithoutGST: {
         type: Number,
       },
