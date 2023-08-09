@@ -1,5 +1,5 @@
 const express = require("express");
-const { getAllsaleOrder, createSaleOrder, updateSaleOrder, deleteSaleOrder, getSaleOrderDetail ,getAllSaleHistory,getSaleHistoryByDate} = require("../controllers/saleOrder");
+const { getAllsaleOrder, createSaleOrder, updateSaleOrder,createbagSaleOrder,getAllBagSaleHistory, deleteSaleOrder,getBagSaleHistoryByDate, getSaleOrderDetail ,getAllBagsaleOrder,deleteBagSaleOrder,getAllSaleHistory,getSaleHistoryByDate, getbagSaleOrderDetail} = require("../controllers/saleOrder");
 
 const router = express.Router();
 
@@ -13,5 +13,10 @@ router.route("/saleorder/new").post(createSaleOrder);
 // router.route("/order/status/:id").put(updateOrderStatus);
 router.route("/saleorder/:id").put(updateSaleOrder).delete(deleteSaleOrder).get(getSaleOrderDetail);
 
+router.route("/bagsaleorders").get(getAllBagsaleOrder);
+router.get("/bagsalehistories",getAllBagSaleHistory);
+router.get("/bagsalehistory/:startDate/:endDate", getBagSaleHistoryByDate);
+router.route("/bagsaleorder/new").post(createbagSaleOrder);
 
+router.route("/bagsaleorder/:id").delete(deleteBagSaleOrder).get(getbagSaleOrderDetail)
 module.exports = router;
