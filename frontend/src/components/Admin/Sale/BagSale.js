@@ -31,13 +31,15 @@ const Sale = () => {
       productId: '',
       itemName: '',
       stock: '',
+      discountInPercentage: '',
+      discountInRupess: '',
       pricewithoutgst: '',
       cgstPerItem: '',
       sgstPerItem: '',
       pricePerItem: '',
       quantity: 0,
       totalPrice: '',
-      grandTotal:'',
+      grandTotal: '',
     },
   ]);
 
@@ -104,7 +106,7 @@ const Sale = () => {
       prevItems.map((item) => ({
         ...item,
         price: (item.pcswithQuantity * item.pricePerItem).toFixed(2),
-        discountInRupess: (item.price * discountInPercentage / 100),
+        discountInRupess: (item.price * item.discountInPercentage / 100),
         grandTotal: (item.price - item.discountInRupess).toFixed(2),
       }))
     );
@@ -112,7 +114,7 @@ const Sale = () => {
 
   useEffect(() => {
     updatePriceWithQuantity();
-  }, [items,]);
+  }, [items]);
 
   // console.log("deep",price)
 
@@ -127,6 +129,8 @@ const Sale = () => {
               productId: '',
               pricePerItem: '',
               stock: '',
+              // discountInPercentage:'',
+              // discountInRupess:'',
               initialCgstPerItem: '',
               cgstPerItem: '',
               initialSgstPerItem: '',
@@ -174,6 +178,8 @@ const Sale = () => {
         productId: '',
         itemName: '',
         stock: '',
+        discountInPercentage: '',
+        discountInRupess: '',
         pricewithoutgst: '',
         cgstPerItem: '',
         sgstPerItem: '',
@@ -200,10 +206,10 @@ const Sale = () => {
           pricePerItem: item.pricePerItem,
           pcsToSale: item.pcstoSale, // Passing pcsToSale value here
           pcswithQuantity: item.pcswithQuantity,
-          unit:unitName,
-          discountInPercentage:discountInPercentage,
-          discountInRupess:item.discountInRupess,
-          price:item.price,
+          unit: unitName,
+          discountInPercentage: item.discountInPercentage,
+          discountInRupess: item.discountInRupess,
+          price: item.price,
           quantity: item.quantity.toString(),
           totalPrice: parseFloat(item.grandTotal),
           amountWithoutGST: parseFloat(item.pricewithoutgst),
@@ -478,9 +484,12 @@ const Sale = () => {
                     <input
                       type="number"
                       className="form-control"
-                      value={discountInPercentage}
-                      onChange={(e) => setDiscountInPercentage(e.target.value)}
-
+                      value={item.discountInPercentage}
+                      onChange={(e) => {
+                        const newItems = [...items];
+                        newItems[index].discountInPercentage = e.target.value;
+                        setItems(newItems);
+                      }}
                     />
                   </div>
 
@@ -495,7 +504,7 @@ const Sale = () => {
                   </div>
 
 
-                  <div className="col-md-2 position-relative">
+                  <div className="col-md-2 4position-relative">
                     <label className="label">Quantity of Bag</label>
                     <div className="cart-buttons">
                       <div className="quantity-buttons">
