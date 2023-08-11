@@ -1,38 +1,38 @@
 import React, { useEffect, useState } from 'react'
-import Layout from '../../../Header/Layout'
+import Layout from '../../Header/Layout'
 import { Button, Col, Container, Row, Table } from 'react-bootstrap'
 import { Link, useParams, useLocation } from 'react-router-dom';
 import { AiFillDashboard } from 'react-icons/ai'
 import { IoIosCreate } from "react-icons/io";
-import "../../Billing/billing.css"
+// import "../../Billing/billing.css"
 import axios from 'axios';
 import Form from 'react-bootstrap/Form';
-import './gstbill.css';
+// import './gstbill.css';
 import { useNavigate } from 'react-router-dom'
 
-const GSTBilling = () => {
+const GSTUnitBilling = () => {
     const params = useParams();
     const location = useLocation();
 
 
     const navigate = useNavigate();
-    const [order, setOrder] = useState();
+    const [gstunitorder, setGstunitorder] = useState();
     // const [grandTotal, setGrandTotal] = useState(0);
 
 
 
-    const calculateTotalPrice = () => {
-        if (!order) return 0;
-        return order.Items.reduce((total, item) => total + item.totalPrice, 0);
-    };
+    // const calculateTotalPrice = () => {
+    //     if (!gstunitorder) return 0;
+    //     return gstunitorder.Items.reduce((total, item) => total + item.totalPrice, 0);
+    // };
 
 
 
 
     useEffect(() => {
-        axios.get(`http://localhost:4000/api/v1/gstorder/${params.id}`)
+        axios.get(`http://localhost:4000/api/v1/gstunitorder/${params.id}`)
             .then((response) => {
-                setOrder(response.data.order);
+                setGstunitorder(response.data.gstunitorder);
             })
             .catch((error) => {
                 console.log('Error fetching data:', error);
@@ -57,11 +57,11 @@ const GSTBilling = () => {
 
 
     // };
+    console.log("eee",gstunitorder)
 
-    console.log(order,"pppp")
-    if (!order) return <div>Loading...</div>;
+    if (!gstunitorder) return <div>Loading...</div>;
 
-    const { name, phoneNumber, address, email, gstNumber, totalAmount, payableAmount, remainingAmount, createdDate, Items } = order;
+    const { name, phoneNumber, address, email, gstNumber, totalAmount, payableAmount, remainingAmount, createdDate, Items } = gstunitorder;
 
     const grandTotal = Items.reduce((total, item) => total + item.grandTotal, 0);
     return (
@@ -181,16 +181,21 @@ const GSTBilling = () => {
                                                 <tr className='bill-table'>
                                                     {/* <th>S.N.</th> */}
                                                     <th className='pt-5 mt-4'  >Item Name</th>
-                                                    <th>Price per item</th>
-
+                                                    <th>Amount without GST</th>
                                                     <th>CGST in ₹</th>
                                                     <th>SGST in ₹</th>
-                                                    <th>Amount without GST</th>
-                                                    <th>Discount in %</th>
-                                                    <th>Discount in ₹</th>
+                                                    <th>Price per item</th>
+                                                    <th>Unit Name</th>
+                                                    <th>Pcs to Sale</th>
+                                                    <th>Pcs with Quantity</th>
+                                                  
+                                                  
                                                     <th>Quantity</th>
                                                     <th>Amount</th>
-                                                    <th>Total Amount </th>
+                                                    <th>Discount in %</th>
+                                                    <th>Discount in ₹</th>
+                                                    
+                                                    <th>Total price</th>
                                                 </tr>
                                             </thead>
 
@@ -198,15 +203,23 @@ const GSTBilling = () => {
                                                 {Items?.map((item) => (
                                                     <tr key={item._id}>
                                                         <td>{item.itemName}</td>
-                                                        <td>{item.pricePerItem}</td>
+                                                        <td>{item.amountWithoutGST}</td>
                                                         <td>{item.cgstapplied}</td>
                                                         <td>{item.sgstapplied}</td>
-                                                        <td>{item.amountWithoutGST}</td>
+                                                        <td>{item.pricePerItem}</td>
+
+                                                        <td>{item.unit}</td>
+                                                        
+                                                        <td>{item.pcsToSale}</td>
+                                                        <td>{item.pcswithQuantity}</td>
+                                                       
+                                                       
+                                                        <td>{item.quantity}</td>
+                                                        <td>{item.price}</td>
                                                         <td>{item.discountInPercentage}</td>
                                                         <td>{item.discountInRupess}</td>
-                                                        <td>{item.quantity}</td>
+                                                      
                                                         <td>{item.totalPrice}</td>
-                                                        <td>{item.grandTotal}</td>
                                                     </tr>
                                                 ))}
                                             </tbody>
@@ -250,4 +263,4 @@ const GSTBilling = () => {
     )
 }
 
-export default GSTBilling;
+export default GSTUnitBilling;

@@ -11,6 +11,18 @@ const BagOrderSchema = new mongoose.Schema({
   createdDate:{
     type: Date,
   },
+  totalAmount:{
+    type:Number,
+
+  },
+  payableAmount:{
+    type:Number,
+    
+  },
+  remainingAmount:{
+    type:Number,
+    
+  },
 
   // phoneNumber: {
   //   type: Number,
@@ -31,10 +43,6 @@ const BagOrderSchema = new mongoose.Schema({
 
       },
       quantity: {
-        type: String,
-
-      },
-      unitName: {
         type: String,
 
       },
@@ -73,22 +81,13 @@ const BagOrderSchema = new mongoose.Schema({
       unit:{
         type: String,
       },
-      discountInPercentage:{
-        type: Number,
-
-      },
-      discountInRupess:{
-        type: Number,
-
-      },
+    
       price:{
         type: Number,
 
       },
-      price:{
-        type: Number,
+  
 
-      }
     },
   ],
 });

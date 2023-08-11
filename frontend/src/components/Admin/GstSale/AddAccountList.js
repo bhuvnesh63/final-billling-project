@@ -27,7 +27,7 @@ const AddAccountList = () => {
     // console.log(id)
     axios.delete(`http://localhost:4000/api/v1/account/${id}`).then(response => {
       // alert("Item has been deleted successfully")
-      toast.success("Item deleted Succesfully")
+      toast.success("Account deleted Succesfully")
     })
       .catch(error => {
         console.log(error)

@@ -1,14 +1,23 @@
 
 const mongoose = require("mongoose");
 
-const BagOrderHistorySchema = new mongoose.Schema({
-  customerName: {
+const GSTUnitOrderHistorySchema = new mongoose.Schema({
+  name: {
     type: String,
   },
-  mobileNumber: {
+  phoneNumber: {
     type: Number,
   },
-  createdDate:{
+  email: {
+    type: String,
+  },
+  address: {
+    type: String,
+  },
+  gstNumber: {
+    type: String,
+  },
+  createdDate: {
     type: Date,
   },
   totalAmount: {
@@ -21,9 +30,7 @@ const BagOrderHistorySchema = new mongoose.Schema({
     type: Number,
   },
 
-  // phoneNumber: {
-  //   type: Number,
-  // },
+
   Items: [
     {
 
@@ -40,10 +47,6 @@ const BagOrderHistorySchema = new mongoose.Schema({
 
       },
       quantity: {
-        type: String,
-
-      },
-      unitName: {
         type: String,
 
       },
@@ -82,24 +85,15 @@ const BagOrderHistorySchema = new mongoose.Schema({
       unit:{
         type: String,
       },
-      discountInPercentage:{
-        type: Number,
-
-      },
-      discountInRupess:{
-        type: Number,
-
-      },
+    
       price:{
         type: Number,
 
       },
-      price:{
-        type: Number,
+  
 
-      }
     },
   ],
 });
 
-module.exports = mongoose.model("BagSaleOrderHistory", BagOrderHistorySchema);
+module.exports = mongoose.model("GSTUnitOrderHistory", GSTUnitOrderHistorySchema);

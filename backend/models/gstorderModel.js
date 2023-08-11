@@ -17,9 +17,19 @@ const OrderSchema = new mongoose.Schema({
   gstNumber: {
     type: String,
   },
-  createdDate:{
+  createdDate: {
     type: Date,
   },
+  totalAmount: {
+    type: Number,
+  },
+  payableAmount: {
+    type: Number,
+  },
+  remainingAmount: {
+    type: Number,
+  },
+
 
   Items: [
     {
@@ -39,6 +49,9 @@ const OrderSchema = new mongoose.Schema({
         type: String,
 
       },
+      grandTotal: {
+        type: Number,
+      },
       totalPrice: {
         type: Number,
       },
@@ -52,6 +65,12 @@ const OrderSchema = new mongoose.Schema({
         type: Number,
       },
       pricePerItem: {
+        type: Number,
+      },
+      discountInPercentage: {
+        type: Number,
+      },
+      discountInRupess: {
         type: Number,
       },
     },

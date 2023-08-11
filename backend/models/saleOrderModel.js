@@ -11,6 +11,15 @@ const OrderSchema = new mongoose.Schema({
   createdDate:{
     type: Date,
   },
+  totalAmount: {
+    type: Number,
+  },
+  payableAmount: {
+    type: Number,
+  },
+  remainingAmount: {
+    type: Number,
+  },
 
   // phoneNumber: {
   //   type: Number,

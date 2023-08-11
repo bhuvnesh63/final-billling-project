@@ -3,29 +3,29 @@ import React, { useEffect, useState } from 'react';
 import { Button, Col, Container, Row, Table } from 'react-bootstrap';
 import { AiFillDashboard } from 'react-icons/ai';
 import { IoIosCreate } from 'react-icons/io';
-import { useNavigate, useParams } from 'react-router-dom'; 
+import { useNavigate, useParams } from 'react-router-dom'; // Import useParams to get the sale order ID from the URL parameter
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
 
-const EditSale = () => {
+const EditUnitSale = () => {
   const params = useParams();
   const navigate = useNavigate();
-  const { saleOrderId } = useParams(); 
+  const { saleOrderId } = useParams(); // Get the sale order ID from the URL parameter
   const [saleOrderData, setSaleOrderData] = useState(null);
   const [totalAmount, setTotalAmount] = useState(0);
   const [remainingAmount, setRemainingAmount] = useState(0);
   const [payableAmount, setPayableAmount] = useState(0);
 
   useEffect(() => {
-
-    axios.get(`http://localhost:4000/api/v1/saleorder/${params.id}`)
+    // Fetch sale order details using the saleOrderId
+    axios.get(`http://localhost:4000/api/v1/bagsaleorder/${params.id}`)
       .then(response => {
-        setSaleOrderData(response.data.sale);
-
-        setTotalAmount(response.data.sale.totalAmount);
-        setRemainingAmount(response.data.sale.remainingAmount); 
-        setPayableAmount(response.data.sale.payableAmount);
+        setSaleOrderData(response.data.bagsale);
+        // Store fetched sale order data
+        setTotalAmount(response.data.bagsale.totalAmount);
+        setRemainingAmount(response.data.bagsale.remainingAmount); // Set initial remaining amount
+        setPayableAmount(response.data.bagsale.payableAmount); // Set initial payable amount
       })
       .catch(error => {
         console.error('Error fetching sale order details:', error);
@@ -34,24 +34,28 @@ const EditSale = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    // Update the remaining and payable amounts in the saleOrderData object
     const updatedSaleOrder = { ...saleOrderData };
     updatedSaleOrder.remainingAmount = remainingAmount;
     updatedSaleOrder.payableAmount = payableAmount;
 
     try {
-
-      await axios.put(`http://localhost:4000/api/v1/saleorder/${params.id}`, updatedSaleOrder);
-
+      // Send a PUT request to update the sale order details
+      await axios.put(`http://localhost:4000/api/v1/bagsaleorder/${params.id}`, updatedSaleOrder);
+      // Handle success or navigate to a different page
     } catch (error) {
       console.error('Error updating sale order:', error);
     }
-    navigate('/sale');
+    navigate('/unitsalelist');
     toast.success("Payment Update Successfully");
   };
 
   if (!saleOrderData) {
     return <div>Loading...</div>;
   }
+
+  
 
 
   return (
@@ -93,10 +97,11 @@ const EditSale = () => {
           <hr />
         </Row>
       </Container>
-
+      {/* form section start */}
       <div className="form-div">
         <Container className="mt-4">
-  
+          {/* ... rest of your UI components ... */}
+
           <form className="row g-4 p-3 registration-form" onSubmit={handleSubmit} >
             <div className="col-md-4 position-relative">
               <label className="label">Total Amount</label>
@@ -147,4 +152,4 @@ const EditSale = () => {
   );
 };
 
-export default EditSale;
+export default EditUnitSale;

@@ -18,15 +18,18 @@ const Sale = () => {
   const [mobileNumber, setMobileNumber] = useState('');
   const [discountInPercentage, setDiscountInPercentage] = useState("");
   // const [discountInRupess, setDiscountInRupess] = useState("");
-  
+  const [totalAmount, setTotalAmount] = useState(0);
+  const [payableAmount, setPayableAmount] = useState(0);
+  const [remainingAmount, setRemainingAmount] = useState(0);
+
   const [items, setItems] = useState([
     {
       _id: '',
       productId: '',
       itemName: '',
       stock: '',
-      discountInPercentage:'',
-      discountInRupess:'',
+      discountInPercentage: '',
+      discountInRupess: '',
       pricewithoutgst: '',
       cgstPerItem: '',
       sgstPerItem: '',
@@ -69,15 +72,15 @@ const Sale = () => {
         cgstPerItem: (item.initialCgstPerItem * item.quantity).toFixed(2),
         sgstPerItem: (item.initialSgstPerItem * item.quantity).toFixed(2),
         pricewithoutgst: (item.initialamountwithoutgst * item.quantity).toFixed(2),
-        discountInRupess: (item.totalPrice * discountInPercentage/100),
-        grandTotal:(item.totalPrice - item.discountInRupess).toFixed(2),  
+        discountInRupess: (item.totalPrice * item.discountInPercentage / 100),
+        grandTotal: (item.totalPrice - item.discountInRupess).toFixed(2),
       }))
     );
   };
 
   useEffect(() => {
     updatePriceWithQuantity();
-  }, [items, ]);
+  }, [items,]);
 
   const getItemPrice = (selectedItemName, index) => {
     if (!selectedItemName) {
@@ -116,7 +119,7 @@ const Sale = () => {
               productId: selectedItemObj._id,
               pricePerItem: selectedItemObj.sellingPrice,
               stock: selectedItemObj.stock,
-      
+
               initialCgstPerItem: selectedItemObj.cgstPerItem,
               cgstPerItem: selectedItemObj.cgstPerItem,
               initialSgstPerItem: selectedItemObj.sgstPerItem,
@@ -138,8 +141,8 @@ const Sale = () => {
         productId: '',
         itemName: '',
         stock: '',
-        discountInPercentage:'',
-        discountInRupess:'',
+        discountInPercentage: '',
+        discountInRupess: '',
         pricewithoutgst: '',
         cgstPerItem: '',
         sgstPerItem: '',
@@ -150,22 +153,35 @@ const Sale = () => {
     ]);
   };
 
+  useEffect(() => {
+
+    const newTotalAmount = items.reduce((sum, item) => sum + parseFloat(item.grandTotal), 0);
+    setTotalAmount((newTotalAmount).toFixed(2));
+
+  }, [items]);
+  const calculateRemainingAmount = () => {
+    return totalAmount - parseFloat(payableAmount).toFixed(2);
+  };
 
 
   const submitform = async (event) => {
     event.preventDefault();
     // console.log("deepanshu",items)rs
+    const remainingAmt = calculateRemainingAmount();
     const finalItems = items.filter((item) => item.productId)
     try {
       const saleOrderData = {
         customerName: customerName,
         mobileNumber: mobileNumber,
+        totalAmount: totalAmount,
+        payableAmount: payableAmount,
+        remainingAmount: remainingAmt,
         Items: finalItems.map((item) => ({
           productId: item.productId,
           itemName: item.itemName,
           pricePerItem: item.pricePerItem,
-          discountInPercentage:discountInPercentage,
-          discountInRupess:item.discountInRupess,
+          discountInPercentage: item.discountInPercentage,
+          discountInRupess: item.discountInRupess,
           quantity: item.quantity.toString(),
           totalPrice: parseFloat(item.totalPrice),
           grandTotal: parseFloat(item.grandTotal),
@@ -183,7 +199,7 @@ const Sale = () => {
       console.log('Error saving sale order data:', error.response);
     }
   };
- 
+
   return (
     <>
       <Layout />
@@ -217,7 +233,7 @@ const Sale = () => {
                       Check Sale List
                     </Button>
 
-                    <Button className="table-btn" variant="success" onClick={() => navigate("/unitsale")} >
+                    <Button className="table-btn unit-sale" variant="success" onClick={() => navigate("/unitsale")} >
                       <IoIosCreate />&nbsp;
                       Unit Sale
                     </Button>
@@ -235,7 +251,7 @@ const Sale = () => {
       </Container>
 
       <div className="form-div">
-      <h5 className="w3-center w3-flat-midnight-blue w3-padding-48 w3-border-blue-grey w3-grey text text-center mb-5 mt-3">New Sale</h5>
+        <h5 className="w3-center w3-flat-midnight-blue w3-padding-48 w3-border-blue-grey w3-grey text text-center mb-5 mt-3">New Sale</h5>
 
         <Container>
           <Row>
@@ -333,8 +349,12 @@ const Sale = () => {
                     <input
                       type="number"
                       className="form-control"
-                      value={discountInPercentage}
-                      onChange={(e) => setDiscountInPercentage(e.target.value)}
+                      value={item.discountInPercentage}
+                      onChange={(e) => {
+                        const newItems = [...items];
+                        newItems[index].discountInPercentage = e.target.value;
+                        setItems(newItems);
+                      }}
                     />
                   </div>
 
@@ -344,7 +364,7 @@ const Sale = () => {
                       type="number"
                       className="form-control"
                       value={item.discountInRupess}
-                      // onChange={(e) => setDiscountInPercentage(e.target.value)}
+                    // onChange={(e) => setDiscountInPercentage(e.target.value)}
                     />
                   </div>
 
@@ -408,16 +428,42 @@ const Sale = () => {
                   </Col>
                   <hr></hr>
                 </React.Fragment>
- 
+
               ))}
 
-                         
+
               <center>
                 <Button className="float-end" variant="success" type="button" onClick={addMoreItems}>
                   Add more
                 </Button>
               </center>
-
+              <div className="col-md-2 position-relative">
+                <label className="label">Total Amount</label>
+                <input
+                  type="number"
+                  className="form-control"
+                  value={totalAmount}
+                  readOnly
+                />
+              </div>
+              <div className="col-md-2 position-relative">
+                <label className="label">Payable Amount</label>
+                <input
+                  type="number"
+                  className="form-control"
+                  value={payableAmount}
+                  onChange={(e) => setPayableAmount(e.target.value)}
+                />
+              </div>
+              <div className="col-md-2 position-relative">
+                <label className="label">Remaining Amount</label>
+                <input
+                  type="number"
+                  className="form-control"
+                  value={calculateRemainingAmount().toFixed(2)}
+                  readOnly
+                />
+              </div>
               <center>
                 <Button
                   className="stu_btn"

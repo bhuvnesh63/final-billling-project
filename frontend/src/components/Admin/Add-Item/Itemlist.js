@@ -120,14 +120,14 @@ const Itemlist = ({ items }) => {
 
                         <Link to={`/edititem/${items._id}`}>
                           <Button className='table-btn' 
-                          variant="light" >
+                          variant="success" >
                             &#9998;Edit
                           </Button>
                         </Link>
                       </td>
                       <td>
                         <Button className='table-btn'
-                         variant="light" onClick={(e) => 
+                         variant="success" onClick={(e) => 
                           { deleteData(items._id) }} value={"Delete"}
                         >
                         <span className='delete-icon'>&#x2717;</span>Delete

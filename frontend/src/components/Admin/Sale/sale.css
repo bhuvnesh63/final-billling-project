@@ -45,6 +45,17 @@
   }
 }
 
+.unit-sale{
+  margin-left: 25px;
+}
+.search-bar{
+  margin-left: 20px;
+  font-size: 17px;
+}
+.input-search{
+  margin-left: 8px;
+}
+
 /* .dasboard-table{
     border: 1px solid !important;
 

@@ -4,7 +4,8 @@ import { Button, Container, Row, Table } from 'react-bootstrap'
 import { Link, useNavigate } from 'react-router-dom'
 import { AiFillDashboard } from 'react-icons/ai'
 import { IoIosCreate } from "react-icons/io";
-import axios from 'axios'
+import axios from 'axios';
+import {toast} from 'react-toastify';
 
 
 
@@ -15,6 +16,7 @@ const GstSaleList = () => {
 
   const navigate = useNavigate();
   const [gstSaleList, setGstSaleList] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     axios.get(AccountUrl).then((response) => {
@@ -28,7 +30,7 @@ const GstSaleList = () => {
     // console.log(id)
     axios.delete(`http://localhost:4000/api/v1/gstorder/${id}`).then(response => {
       // alert("Item has been deleted successfully")
-      // toast.success("Item deleted Succesfully")
+      toast.success("Order deleted Succesfully")
     })
       .catch(error => {
         console.log(error)
@@ -37,6 +39,10 @@ const GstSaleList = () => {
   }
 
   if (!gstSaleList) return null;
+
+  const filteredOrders = gstSaleList.orders.filter(order =>
+    order.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <>
@@ -59,6 +65,16 @@ const GstSaleList = () => {
                       <IoIosCreate />&nbsp;
                       New Sale
                     </Button>
+                    <span className="search-bar">
+                      Search
+                      <input
+                        type="text"
+                        placeholder="Search by Customer Name"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        className="input-search"
+                      />
+                    </span>
                     <Button className="table-btn float-end" variant="success" onClick={() => navigate("/gstsalehistory")} >
                       <IoIosCreate />&nbsp;
                       Check GST Sale  History
@@ -89,46 +105,54 @@ const GstSaleList = () => {
                     <th>Address</th>
                     <th>GST No</th>
                     <th>View Bill </th>
+                    <th>Edit payment</th>
                     <th>Action Delete</th>
 
 
                   </tr>
                 </thead>
                 <tbody>
-
-                  {gstSaleList?.orders?.map((items, index) => (
-                    <tr key={items._id}>
-                      <td>{index + 1}</td>
-                      <td>{items.name}</td>
-                      <td>{items.phoneNumber}</td>
-                      <td>{items.email}</td>
-                      <td>{items.address}</td>
-                      <td>{items.gstNumber}</td>
-
-
-                      <td>
-                        <Link to={`/gstbill/${items._id}?invoiceNumber=${index + 1}`}>
-                          <Button className='table-btn'
-                            variant="success" >
-                            &#128065;View</Button>
-                        </Link>
-                      </td>
-
-                      <td>
-                        <Button className='table-btn' variant="success"
-                          onClick={(e) => { deleteData(items._id) }}
-                          value={"Delete"} >
-                          <span className='delete-icon'>&#x2717;</span>Delete
-                        </Button>
-                      </td>
-
+                  {filteredOrders.length === 0 ? (
+                    <tr>
+                      <td colSpan="8" className="text-center">No customers found for the given search criteria.</td>
                     </tr>
+                  ) : (
+
+                    gstSaleList?.orders?.map((items, index) => (
+                      <tr key={items._id}>
+                        <td>{index + 1}</td>
+                        <td>{items.name}</td>
+                        <td>{items.phoneNumber}</td>
+                        <td>{items.email}</td>
+                        <td>{items.address}</td>
+                        <td>{items.gstNumber}</td>
+                        <td>
+                          <Link to={`/gstbill/${items._id}?invoiceNumber=${index + 1}`}>
+                            <Button className='table-btn'
+                              variant="success" >
+                              &#128065;View</Button>
+                          </Link>
+                        </td>
+                        <td>
+                          <Link to={`/editgstsale/${items._id}`}>
+                            <Button className='table-btn'
+                              variant="success" >
+                              &#128065;Edit</Button>
+                          </Link>
+                        </td>
+                        <td>
+                          <Button className='table-btn' variant="success"
+                            onClick={(e) => { deleteData(items._id) }}
+                            value={"Delete"} >
+                            <span className='delete-icon'>&#x2717;</span>Delete
+                          </Button>
+                        </td>
+
+                      </tr>
 
 
-                  ))}
-
-
-
+                    ))
+                  )}
                 </tbody>
               </table>
             </Table>
