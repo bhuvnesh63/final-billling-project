@@ -13,19 +13,19 @@ const EditUnit = () => {
     const params = useParams();
     const navigate = useNavigate();
     const [specificItem, setSpecificItem] = useState({});
-    const [itemName, setItemName] = useState("");
+
     const [unitName, setUnitName] = useState("");
     const [pieceInUnit, setPieceInUnit] = useState("");
-    const [ratePerUnit, setRatePerUnit] = useState("");
+
 
 
     useEffect(() => {
         axios.get(`http://localhost:4000/api/v1/unit/${params.id}`).then((response) => {
             setSpecificItem(response.data.unit);
-            setItemName(response.data.unit.itemName);
+      
             setUnitName(response.data.unit.unitName);
             setPieceInUnit(response.data.unit.pieceInUnit);
-            setRatePerUnit(response.data.unit.ratePerUnit);
+
         });
     }, [params.id]);
 
@@ -33,10 +33,10 @@ const EditUnit = () => {
         event.preventDefault();
         try {
             await axios.put(`http://localhost:4000/api/v1/unit/${params.id}`, {
-                itemName,
+           
                 unitName,
                 pieceInUnit,
-                ratePerUnit
+           
 
             });
             navigate('/unitlist');
@@ -90,10 +90,7 @@ const EditUnit = () => {
                 <Container>
                     <Row>
                         <form className="row g-4 p-3 registration-form">
-                            <div className="col-md-4 position-relative">
-                                <label className="label">Item Name</label>
-                                <input type="text" className="form-control" value={itemName} onChange={(e) => setItemName(e.target.value)} required />
-                            </div>
+                        
                             <div className="col-md-4 position-relative">
                                 <label className="label">
                                     Unit Name</label>
@@ -104,10 +101,7 @@ const EditUnit = () => {
                                     Piece In Unit</label>
                                 <input type="number" className="form-control" value={pieceInUnit} onChange={(e) => setPieceInUnit(e.target.value)} required />
                             </div>
-                            <div className="col-md-4 position-relative">
-                                <label className="label">Rate of Unit/Case ₹</label>
-                                <input type="number" className="form-control" value={ratePerUnit} onChange={(e) => setRatePerUnit(e.target.value)} required />
-                            </div>
+                         
 
                             <center>
                                 <Button className="stu_btn" variant="success" type="submit" onClick={(event) => submitform(event)}>

@@ -6,11 +6,13 @@ import { AiFillDashboard } from 'react-icons/ai'
 import { IoIosCreate } from "react-icons/io";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom'
+import {toast } from 'react-toastify'
 
 const ItemsUrl = "http://localhost:4000/api/v1/saleorders"
 
 const Itemlist = ({ items }) => {
   const [getitems, setGetItems] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
   useEffect(() => {
     axios.get(ItemsUrl).then((response) => {
@@ -25,7 +27,7 @@ const Itemlist = ({ items }) => {
     // console.log(id)
     axios.delete(`http://localhost:4000/api/v1/saleorder/${id}`).then(response => {
       // alert("Item has been deleted successfully")
-      // toast.success("Item deleted Succesfully")
+      toast.success(" order deleted Succesfully")
     })
       .catch(error => {
         console.log(error)
@@ -36,6 +38,10 @@ const Itemlist = ({ items }) => {
 
   // console.log("deepanshu",getitems)
   if (!getitems) return null;
+
+  const filteredItems = getitems.saleorders.filter(item =>
+    item.customerName.toLowerCase().includes(searchQuery.toLowerCase())
+  );
   return (
     <>
       <Layout />
@@ -57,6 +63,16 @@ const Itemlist = ({ items }) => {
                       <IoIosCreate />&nbsp;
                       New Sale
                     </Button>
+                    <span className="search-bar">
+                      Search
+                      <input
+                        type="text"
+                        placeholder="Search by Customer Name"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        className="input-search"
+                      />
+                    </span>
                     <Button className="table-btn float-end" variant="success" onClick={() => navigate("/salehistory")} >
                       <IoIosCreate />&nbsp;
                       Check Sale History
@@ -99,45 +115,31 @@ const Itemlist = ({ items }) => {
                 </thead>
 
                 <tbody>
-                  {getitems?.saleorders?.map((item, index) => (
-                    <tr key={item._id}>
-                      <td>{index + 1}</td>
-                      <td>{item.customerName}</td>
-                      <td>{item.mobileNumber}</td>
-                      <td>
-
-                        <Link to={`/billing/${item._id}?invoiceNumber=${index + 1}`}>
-                          <Button className='table-btn'
-                            variant="success" >
-                            &#128065;   View Bill
-                          </Button>
-                        </Link>
-                      </td>
-                      <td>
-                        <Button className='table-btn'
-                          variant="success" onClick={(e) => { deleteData(item._id) }} value={"Delete"}
-                        >
-                          <span className='delete-icon'>&#x2717;</span>Delete
-                        </Button>
-                      </td>
-                      {/* <td>
-                      <Button className='table-btn' variant="light"
-                        onClick={() => handleModel(items)}
-                      >
-                        &#128065;View
-                      </Button>
-                    </td>
-                    {open && (
-                      <ModalComp
-                        open={open}
-                        setOpen={setOpen}
-                        {...user}
-                      />
-                    )} */}
-
+                  {filteredItems.length === 0 ? (
+                    <tr>
+                      <td colSpan="5" className="text-center">No customers found for the given search criteria.</td>
                     </tr>
-                  ))}
-
+                  ) : (
+                    filteredItems.map((item, index) => (
+                      <tr key={item._id}>
+                        <td>{index + 1}</td>
+                        <td>{item.customerName}</td>
+                        <td>{item.mobileNumber}</td>
+                        <td>
+                          <Link to={`/billing/${item._id}?invoiceNumber=${index + 1}`}>
+                            <Button className='table-btn' variant="success">
+                              &#128065;   View Bill
+                            </Button>
+                          </Link>
+                        </td>
+                        <td>
+                          <Button className='table-btn' variant="success" onClick={() => deleteData(item._id)}>
+                            <span className='delete-icon'>&#x2717;</span>Delete
+                          </Button>
+                        </td>
+                      </tr>
+                    ))
+                  )}
                 </tbody>
               </table>
             </Table>

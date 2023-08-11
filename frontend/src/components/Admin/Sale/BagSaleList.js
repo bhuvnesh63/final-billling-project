@@ -6,12 +6,15 @@ import { IoIosCreate } from "react-icons/io";
 import Layout from '../../Header/Layout';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify';
 
 const SaleUrl = "http://localhost:4000/api/v1/bagsaleorders"
 
 
 const BagSaleList = () => {
+
   const [getsale, setSale] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
   useEffect(() => {
     axios.get(SaleUrl).then((response) => {
@@ -23,15 +26,16 @@ const BagSaleList = () => {
   const deleteData = (id) => {
     // console.log(id)
     axios.delete(`http://localhost:4000/api/v1/bagsaleorder/${id}`).then(response => {
-      // alert("Item has been deleted successfully")
-      // toast.success("Item deleted Succesfully")
+      alert("Unit Order has been deleted successfully")
+      toast.success("Item deleted Succesfully")
     })
       .catch(error => {
         console.log(error)
       })
 
   }
-  console.log("ddd",getsale)
+
+
 
   if (!getsale) return null;
 
@@ -54,10 +58,21 @@ const BagSaleList = () => {
                 <th>
                   <div className='table-div' >
 
-                    <Button className="table-btn" variant="success" onClick={() => navigate("/sale")} >
+                    <Button className="table-btn" variant="success" onClick={() => navigate("/unitsale")} >
                       <IoIosCreate />&nbsp;
-                      New Sale
+                      New Unit Sale
                     </Button>
+
+                    <span className="search-bar">
+                      Search
+                      <input
+                        type="text"
+                        placeholder="Search by Customer Name"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        className="input-search"
+                      />
+                    </span>
                     <Button className="table-btn float-end" variant="success" onClick={() => navigate("/salehistory")} >
                       <IoIosCreate />&nbsp;
                       Check Sale History
@@ -82,7 +97,6 @@ const BagSaleList = () => {
 
 
 
-
             <Table responsive>
               <table class="table table-bordered border-secondary">
                 <thead>
@@ -90,14 +104,11 @@ const BagSaleList = () => {
                     <th>Serial Number</th>
                     <th>Customer Name</th>
                     <th>Mobile No</th>
+                    <th>Total Amount</th>
+                    <th>Payable Amount</th>
+                    <th>Remaining Amount</th>
                     <th>Item Name</th>
-                    {/* <th>Amount without GST</th> */}
-                    {/* <th>CGST Applied</th> */}
-                    {/* <th>SGST Applied</th>  */}
-                    {/* <th>Price per item</th> */}
-                    {/* <th>Quantity</th> */}
-                    {/* <th>Total price</th> */}
-                    {/* <th>Item Name (2)</th> */}
+                    <th>Action Edit</th>
                     <th>Action View</th>
                     <th>Action Delete</th>
 
@@ -105,49 +116,58 @@ const BagSaleList = () => {
                   </tr>
                 </thead>
                 <tbody>
+                  {getsale.bagsaleorders
+                    .filter(saleOrder =>
+                      searchQuery === "" || saleOrder.customerName.toLowerCase().includes(searchQuery.toLowerCase())
+                    )
+                    .map((saleOrder, index) => (
+                      <tr key={saleOrder._id}>
+                        <td>{index + 1}</td>
+                        <td>{saleOrder.customerName}</td>
+                        <td>{saleOrder.mobileNumber}</td>
+                        <td>{saleOrder.totalAmount}</td>
+                        <td>{saleOrder.payableAmount}</td>
+                        <td>{saleOrder.remainingAmount}</td>
+                        <td>
+                          {saleOrder.Items.map((item, itemIndex) => (
+                            <span key={item._id}>
+                              {item.itemName}
+                              {itemIndex !== saleOrder.Items.length - 1 ? ', ' : ''}
+                            </span>
+                          ))}
+                        </td>
 
-                  {getsale.bagsaleorders.map((item, index) => (
-                    <tr key={item._id}>
-                      <td>{index + 1}</td>
-                      <td>{item.customerName}</td>
-                      <td>{item.mobileNumber}</td>
-                      {item.Items.map((item) => (
-                        <React.Fragment key={item._id}>
-                          <td>{item.itemName}</td>
-                          {/* <td>{item.amountWithoutGST}</td>
-                          <td>{item.cgstapplied}</td>
-                          <td>{item.sgstapplied}</td>
-                          <td>{item.pricePerItem}</td>
-                          <td>{item.quantity}</td>
-                          <td>{item.totalPrice}</td> */}
-                        </React.Fragment>
-                      ))}
-
-
-                      <td>
-                        <Link to={`/unitbilling/${item._id}?invoiceNumber=${index + 1}`}>
-                          <Button className='table-btn'
-                            variant="success" >
-                            &#128065;View</Button>
-                        </Link>
-                      </td>
-
-                      <td>
-                        <Button className='table-btn' variant="success"
-                          onClick={(e) => { deleteData(item._id) }}
-                          value={"Delete"} >
-                          <span className='delete-icon'>&#x2717;</span>Delete
-                        </Button>
-                      </td>
-
-                    </tr>
-
-
-                  ))}
-
-
-
+                        <td>
+                          <Link to={`/editunitsale/${saleOrder._id}`}>
+                            <Button className='table-btn' variant="success">&#128065; Edit</Button>
+                          </Link>
+                        </td>
+                        <td>
+                          <Link to={`/unitbilling/${saleOrder._id}?invoiceNumber=${index + 1}`}>
+                            <Button className='table-btn' variant="success">&#128065; View</Button>
+                          </Link>
+                        </td>
+                        <td>
+                          <Button
+                            className='table-btn'
+                            variant="success"
+                            onClick={() => deleteData(saleOrder._id)}
+                            value={"Delete"}>
+                            <span className='delete-icon'>&#x2717;</span> Delete
+                          </Button>
+                        </td>
+                      </tr>
+                    ))}
+                  {searchQuery && 
+                    getsale.bagsaleorders.filter(saleOrder =>
+                      saleOrder.customerName.toLowerCase().includes(searchQuery.toLowerCase())
+                    ).length === 0 && (
+                      <tr>
+                        <td colSpan="10" className="text-center">  No customers found for the given search criteria.</td>
+                      </tr>
+                    )}
                 </tbody>
+
               </table>
             </Table>
           </Row>

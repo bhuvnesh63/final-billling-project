@@ -20,6 +20,15 @@ const OrderSchema = new mongoose.Schema({
     createdDate: {
         type: Date,
     },
+    totalAmount: {
+        type: Number,
+    },
+    payableAmount: {
+        type: Number,
+    },
+    remainingAmount: {
+        type: Number,
+    },
 
     Items: [
         {
@@ -42,6 +51,9 @@ const OrderSchema = new mongoose.Schema({
             totalPrice: {
                 type: Number,
             },
+            grandTotal: {
+                type: Number,
+            },
             amountWithoutGST: {
                 type: Number,
             },
@@ -52,6 +64,12 @@ const OrderSchema = new mongoose.Schema({
                 type: Number,
             },
             pricePerItem: {
+                type: Number,
+            },
+            discountInPercentage: {
+                type: Number,
+            },
+            discountInRupess: {
                 type: Number,
             },
         },

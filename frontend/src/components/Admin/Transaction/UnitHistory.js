@@ -32,7 +32,7 @@ const UnitHistory = ({ items }) => {
             setUnitHistory(response.data)
 
             // alert("Item has been deleted successfully")
-            toast.success("Item Fetched Succesfully")
+            toast.success("Unit Fetched Succesfully")
         })
             .catch(error => {
                 console.log(error)

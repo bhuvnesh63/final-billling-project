@@ -11,10 +11,10 @@ import { toast } from 'react-toastify';
 const AddUnit = () => {
 
 
-  const [itemName, setitemName] = useState("");
+
   const [unitName, setUnitName] = useState("");
   const [pieceInUnit, setPieceInUnit] = useState("");
-  const [ratePerUnit, setRatePerUnit] = useState("");
+
 
 
   const navigate = useNavigate();
@@ -24,18 +24,17 @@ const AddUnit = () => {
     event.preventDefault();
     try {
       await axios.post("http://localhost:4000/api/v1/unit/new", {
-        "itemName": itemName,
+
         "unitName":unitName,
         "pieceInUnit":pieceInUnit,
-        "ratePerUnit":ratePerUnit
 
 
    
 
 
       })
-      toast.success("Item Add Successfully");
-      navigate("/itemlist");
+      toast.success("Unit Add Successfully");
+      navigate("/unitlist");
 
     } catch (error) {
       console.log(error.response);
@@ -53,7 +52,7 @@ const AddUnit = () => {
             <tr>
               <th>
                 <h5>
-                  <AiFillDashboard /> &nbsp;Dasboard / Add Item
+                  <AiFillDashboard /> &nbsp;Dasboard / Add Unit
                 </h5>
               </th>
             </tr>
@@ -88,20 +87,11 @@ const AddUnit = () => {
 
 
       <div className="form-div">
-        <h5 className="w3-center w3-flat-midnight-blue w3-padding-48 w3-border-blue-grey w3-grey text text-center mb-5 mt-3">Add Item </h5>
+        <h5 className="w3-center w3-flat-midnight-blue w3-padding-48 w3-border-blue-grey w3-grey text text-center mb-5 mt-3">Add Unit </h5>
         <Container>
           <Row>
             <form className="row g-4 p-3 registration-form">
-              <div class="col-md-4 position-relative">
-                <label className="label">Item Name</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  value={itemName}
-                  onChange={(e) => setitemName(e.target.value)}
-                  required
-                />
-              </div>
+            
 
               <div class="col-md-4 position-relative">
                 <label className="label">Unit Name </label>
@@ -123,16 +113,7 @@ const AddUnit = () => {
                   required
                 />
               </div>
-              <div class="col-md-4 position-relative">
-                <label className="label">Rate of Unit/Case ₹</label>
-                <input
-                  type="number"
-                  class="form-control"
-                  value={ratePerUnit}
-                  onChange={(e) => setRatePerUnit(e.target.value)}
-                  required
-                />
-              </div>
+          
             
               <center>
                 <Button

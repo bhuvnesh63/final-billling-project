@@ -43,6 +43,9 @@ exports.createSaleOrder = (async (req, res, next) => {
         sale,
     });
 });
+
+
+////////////////////////////////////////////////
 exports.createbagSaleOrder = (async (req, res, next) => {
 
     // const sale = await SaleOrder.create(req.body);
@@ -78,6 +81,8 @@ exports.createbagSaleOrder = (async (req, res, next) => {
 });
 
 
+//////////////////////////////////////////////////////////////////////
+
 exports.getAllsaleOrder = async (req, res) => {
     const saleorders = await SaleOrder.find();
     res.status(200).json({
@@ -87,7 +92,7 @@ exports.getAllsaleOrder = async (req, res) => {
 
 }
 
-
+////////////////////////////////////////////////////////////////
 
 exports.getAllBagsaleOrder = async (req, res) => {
     const bagsaleorders = await BagSale.find();
@@ -98,6 +103,7 @@ exports.getAllBagsaleOrder = async (req, res) => {
 
 }
 
+///////////////////////////////////////////////////////////
 
 exports.getAllBagSaleHistory = async (req, res) => {
 
@@ -128,7 +134,7 @@ exports.getAllBagSaleHistory = async (req, res) => {
 }
 
 
-
+/////////////////////////////////////////////////////////////////
 
 
 exports.getAllSaleHistory = async (req, res) => {
@@ -158,6 +164,8 @@ exports.getAllSaleHistory = async (req, res) => {
     });
 
 }
+
+/////////////////////////////////////////////////////
 
 exports.getSaleHistoryByDate = async (req, res) => {
 
@@ -190,7 +198,7 @@ exports.getSaleHistoryByDate = async (req, res) => {
 
 }
 
-
+/////////////////////////////////////////////////////////////
 
 exports.getBagSaleHistoryByDate = async (req, res) => {
 
@@ -279,6 +287,28 @@ exports.updateSaleOrder = async (req, res, next) => {
     res.status(200).json({
         success: true,
         sale,
+    });
+
+}
+
+
+exports.updateBagSaleOrder = async (req, res, next) => {
+    let bagsale = await BagSale.findById(req.params.id);
+
+    if (!bagsale) {
+        return res.status(500).json({
+            success: false,
+            message: "BagSale not Found"
+        });
+    }
+    bagsale = await BagSale.findByIdAndUpdate(req.params.id, req.body, {
+        new: true,
+        runValidators: true,
+        useFindAndModify: false,
+    });
+    res.status(200).json({
+        success: true,
+        bagsale,
     });
 
 }

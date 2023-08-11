@@ -26,6 +26,10 @@ const Sale = () => {
   const [price, setPrice] = useState('');
   const [discountInPercentage, setDiscountInPercentage] = useState("");
   const [discountInRupess, setDiscountInRupess] = useState("");
+
+  const [totalAmount, setTotalAmount] = useState(0);
+  const [payableAmount, setPayableAmount] = useState(0);
+  const [remainingAmount, setRemainingAmount] = useState(0);
   const [items, setItems] = useState([
     {
       productId: '',
@@ -184,22 +188,35 @@ const Sale = () => {
         cgstPerItem: '',
         sgstPerItem: '',
         pricePerItem: '',
-        quantity: 1,
+        quantity: 0,
         totalPrice: '',
       },
     ]);
   };
 
+  useEffect(() => {
 
+    const newTotalAmount = items.reduce((sum, item) => sum + parseFloat(item.grandTotal), 0);
+    setTotalAmount((newTotalAmount).toFixed(2));
+
+  }, [items]);
+
+  const calculateRemainingAmount = () => {
+    return totalAmount - parseFloat(payableAmount).toFixed(2);
+  };
 
   const submitform = async (event) => {
     event.preventDefault();
     // console.log("deepanshu",items)rs
+    const remainingAmt = calculateRemainingAmount().toFixed(2);
     const finalItems = items.filter((item) => item.productId)
     try {
       const saleOrderData = {
         customerName: customerName,
         mobileNumber: mobileNumber,
+        totalAmount: totalAmount,
+        payableAmount: payableAmount,
+        remainingAmount: remainingAmt,
         Items: finalItems.map((item) => ({
           productId: item.productId,
           itemName: item.itemName,
@@ -216,12 +233,15 @@ const Sale = () => {
           cgstapplied: parseFloat(item.cgstPerItem),
           sgstapplied: parseFloat(item.sgstPerItem),
 
+
+
+
         })),
       };
 
       await axios.post(SaleOrderUrl, saleOrderData);
-      navigate('/billlist');
-      toast.success("Order Placed Successfully");
+      navigate('/unitsalelist');
+      toast.success(" Unit Order Placed Successfully");
     } catch (error) {
       console.log('Error saving sale order data:', error.response);
     }
@@ -236,7 +256,7 @@ const Sale = () => {
             <tr>
               <th>
                 <h5>
-                  <AiFillDashboard /> &nbsp;Dashboard / Add Sale
+                  <AiFillDashboard /> &nbsp;Dashboard / New Unit Sale
                 </h5>
               </th>
             </tr>
@@ -255,24 +275,21 @@ const Sale = () => {
                     <Link to="/salelist">Go Back</Link>
                   </Button> */}
 
-                    <Button className="table-btn" variant="success" onClick={() => navigate("/salelist")} >
-                      <IoIosCreate />&nbsp;
-                      Check Sale List
-                    </Button>
+                   
 
-                    <Button className="table-btn" variant="success" onClick={() => navigate("/unitalelist")} >
+                    <Button className="table-btn unit-sale" variant="success" onClick={() => navigate("/unitsalelist")} >
                       <IoIosCreate />&nbsp;
                       Unit Sale List
                     </Button>
 
-                    <Button className="table-btn" variant="success" onClick={() => navigate("/addunit")} >
+                    <Button className="table-btn unit-sale" variant="success" onClick={() => navigate("/addunit")} >
                       <IoIosCreate />&nbsp;
-                      Add New
+                      Add New Unit
                     </Button>
 
-                    <Button className="table-btn float-end" variant="success" onClick={() => navigate("/salehistory")} >
+                    <Button className="table-btn float-end" variant="success" onClick={() => navigate("/unitsalehistory")} >
                       <IoIosCreate />&nbsp;
-                      Check Sale History
+                      Check Unit Sale History
                     </Button>
                   </div>
                 </th>
@@ -283,7 +300,7 @@ const Sale = () => {
       </Container>
 
       <div className="form-div">
-        <h5 className="w3-center w3-flat-midnight-blue w3-padding-48 w3-border-blue-grey w3-grey text text-center mb-5 mt-3">New Sale</h5>
+        <h5 className="w3-center w3-flat-midnight-blue w3-padding-48 w3-border-blue-grey w3-grey text text-center mb-5 mt-3">New Unit Sale</h5>
 
         <Container >
           <Row>
@@ -386,40 +403,13 @@ const Sale = () => {
                     />
                   </div>
 
-
-
-
-                  <div className="col-md-2 position-relative">
+                  {/* <div className="col-md-2 position-relative">
                     <label className="label">Pcs/Unit</label>
                     <input
                       type="text"
                       className="form-control"
                       value={pieceInUnit}
                       readOnly
-                    />
-                  </div>
-
-
-
-
-                  {/* <div className="col-md-2 position-relative">
-                    <label className="label">Pcs to Sale</label>
-                    <input
-                      type="number"
-                      className="form-control"
-                      value={pcstoSale}
-                      onChange={(e) => setPcsToSale(e.target.value)}
-
-                    />
-                  </div>
-                  <div className="col-md-2 position-relative">
-                    <label className="label">Pcs with quantity</label>
-                    <input
-                      type="number"
-                      className="form-control"
-                      // value={pcswithQuantity}
-                      // onChange={(e) => setPcsWithQuantity(e.target.value)}
-
                     />
                   </div> */}
                   <div className="col-md-2 position-relative">
@@ -429,12 +419,9 @@ const Sale = () => {
                       className="form-control"
                       value={item.pcstoSale}
                       onChange={(e) => {
-
                         const newItems = [...items];
                         newItems[index].pcstoSale = e.target.value;
                         setItems(newItems);
-
-
                         const pcsToSale = parseFloat(e.target.value);
                         const newPcsWithQuantity = pcsToSale * item.quantity;
                         setPcsWithQuantity(newPcsWithQuantity);
@@ -450,8 +437,6 @@ const Sale = () => {
                       readOnly
                     />
                   </div>
-
-
 
                   <div className="col-md-2 position-relative">
                     <label className="label">Unit</label>
@@ -521,14 +506,6 @@ const Sale = () => {
                           className="increment-buttons"
                           onClick={() => {
                             increment(index);
-
-                            // Calculate "Pcs with quantity" and update the state
-                            // const pcsToSale = parseFloat(item.pcstoSale);
-                            // const newPcsWithQuantity = pcsToSale * (item.quantity + 1);
-                            // const newItems = [...items];
-                            // newItems[index].quantity += 1;
-                            // newItems[index].pcswithQuantity = newPcsWithQuantity;
-                            // setItems(newItems);
                           }}
                         >
                           +
@@ -562,6 +539,7 @@ const Sale = () => {
                       required
                     />
                   </Col>
+                  <hr></hr>
                 </React.Fragment>
               ))}
 
@@ -571,6 +549,37 @@ const Sale = () => {
                   Add more
                 </Button>
               </center>
+
+
+              <div className="col-md-2 position-relative">
+                <label className="label">Total Amount</label>
+                <input
+                  type="number"
+                  className="form-control"
+                  value={totalAmount}
+                  readOnly
+                />
+              </div>
+              <div className="col-md-2 position-relative">
+                <label className="label">Payable Amount</label>
+                <input
+                  type="number"
+                  className="form-control"
+                  value={payableAmount}
+                  onChange={(e) => setPayableAmount(e.target.value)}
+                />
+              </div>
+              <div className="col-md-2 position-relative">
+                <label className="label">Remaining Amount</label>
+                <input
+                  type="number"
+                  className="form-control"
+                  value={calculateRemainingAmount().toFixed(2)}
+                  readOnly
+                />
+              </div>
+
+
 
               <center>
                 <Button

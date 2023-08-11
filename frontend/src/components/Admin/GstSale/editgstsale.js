@@ -8,7 +8,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 
 
-const EditSale = () => {
+const GstEditSale = () => {
   const params = useParams();
   const navigate = useNavigate();
   const { saleOrderId } = useParams(); 
@@ -19,13 +19,13 @@ const EditSale = () => {
 
   useEffect(() => {
 
-    axios.get(`http://localhost:4000/api/v1/saleorder/${params.id}`)
+    axios.get(`http://localhost:4000/api/v1/gstorder/${params.id}`)
       .then(response => {
-        setSaleOrderData(response.data.sale);
+        setSaleOrderData(response.data.order);
 
-        setTotalAmount(response.data.sale.totalAmount);
-        setRemainingAmount(response.data.sale.remainingAmount); 
-        setPayableAmount(response.data.sale.payableAmount);
+        setTotalAmount(response.data.order.totalAmount);
+        setRemainingAmount(response.data.order.remainingAmount); 
+        setPayableAmount(response.data.order.payableAmount);
       })
       .catch(error => {
         console.error('Error fetching sale order details:', error);
@@ -40,7 +40,7 @@ const EditSale = () => {
 
     try {
 
-      await axios.put(`http://localhost:4000/api/v1/saleorder/${params.id}`, updatedSaleOrder);
+      await axios.put(`http://localhost:4000/api/v1/gstorder/${params.id}`, updatedSaleOrder);
 
     } catch (error) {
       console.error('Error updating sale order:', error);
@@ -147,4 +147,4 @@ const EditSale = () => {
   );
 };
 
-export default EditSale;
+export default GstEditSale;

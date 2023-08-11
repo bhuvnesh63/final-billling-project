@@ -11,6 +11,7 @@ const GSTBillURL = "http://localhost:4000/api/v1/gstorders"
 
 const GSTBillList = ({ items }) => {
     const [getorders, setOrders] = useState(null);
+    const [searchQuery, setSearchQuery] = useState("");
 
 
     const navigate = useNavigate();
@@ -35,6 +36,9 @@ const GSTBillList = ({ items }) => {
 
     // console.log("deepanshu",getorders)
     if (!getorders) return null;
+    const filteredOrders = getorders.orders.filter(order =>
+        order.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
     return (
         <>
             <Layout />
@@ -56,6 +60,17 @@ const GSTBillList = ({ items }) => {
                                             <IoIosCreate />&nbsp;
                                             New GST Sale
                                         </Button>
+
+                                        <span className="search-bar">
+                      Search
+                      <input
+                        type="text"
+                        placeholder="Search by Customer Name"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        className="input-search"
+                      />
+                    </span>
                                         <Button className="table-btn float-end" variant="success" onClick={() => navigate("/gstsalehistory")} >
                                             <IoIosCreate />&nbsp;
                                             Check GST Sale  History
@@ -93,7 +108,12 @@ const GSTBillList = ({ items }) => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {getorders?.orders?.map((item, index) => (
+                                {filteredOrders.length === 0 ? (
+                        <tr>
+                            <td colSpan="8" className="text-center">No customers found for the given search criteria.</td>
+                        </tr>
+                    ) : (
+                                    getorders?.orders?.map((item, index) => (
                                         <tr key={item._id}>
                                             <td>{index + 1}</td>
                                             <td>{item.name}</td>
@@ -119,7 +139,8 @@ const GSTBillList = ({ items }) => {
                                                 </Button>
                                             </td>
                                         </tr>
-                                    ))}
+                                  ))
+                                  )}
 
                                 </tbody>
                             </table>

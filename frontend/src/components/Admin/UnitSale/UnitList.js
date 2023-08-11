@@ -85,10 +85,8 @@ const UnitList = ({ items }) => {
                 <thead>
                   <tr>
 
-                    <th>Item Name</th>
                     <th>Unit Name</th>
                     <th>Piece In Unit</th>
-                    <th>Rate of Unit/Case ₹</th>
                     <th>Action Edit</th>
                     <th>Action Delete</th>
                   </tr>
@@ -98,11 +96,10 @@ const UnitList = ({ items }) => {
                   {getitems?.units?.map((items) => (
                     <tr>
 
-                      <td>{items.itemName}</td>
                       <td>{items.unitName}</td>
                       <td>{items.pieceInUnit}</td>
-                      <td>{items.ratePerUnit}</td>
-                     
+                 
+      
                       <td>
 
                         <Link to={`/editunit/${items._id}`}>
@@ -120,20 +117,7 @@ const UnitList = ({ items }) => {
                         <span className='delete-icon'>&#x2717;</span>Delete
                         </Button>
                       </td>
-                      {/* <td>
-                      <Button className='table-btn' variant="light"
-                        onClick={() => handleModel(items)}
-                      >
-                        &#128065;View
-                      </Button>
-                    </td>
-                    {open && (
-                      <ModalComp
-                        open={open}
-                        setOpen={setOpen}
-                        {...user}
-                      />
-                    )} */}
+               
                     
                     </tr>
                   ))}

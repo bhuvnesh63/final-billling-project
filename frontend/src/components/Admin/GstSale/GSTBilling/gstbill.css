@@ -1,49 +1,99 @@
-.bill-table {
-    margin-top: -15px;
-}
-
-.dropdown {
-    width: 35%;
-    height: 40px;
-    margin-left: 120px;
-    margin-top: -25px;
-    display: flex;
-}
-
-.label {
-    font-size: 15px;
-
-}
-
-.gst-bill {
-    border: 1px solid;
-    margin-top: -17px;
-    padding-top: 10px;
-    padding-left: 15px;
-    padding-right: 15px;
-
-}
-
-.gst-details {
-    border: 1px solid;
-    border-top: none;
-    width: 97.1% !important;
-    margin-top: -18px !important;
-    padding-left: 15px;
-    padding-right: 15px;
+.gst{
     padding-top: 20px;
-    margin-left: 12px;
-
+    padding-bottom: 20px;
+    padding-left: 50px;
+}
+.bill-table{
+    padding-top: 15px !important;
+    margin-top: -16px !important;
+    
+}
+.shiped-border{
+    border: 1px solid ;
+    border-left: none;
+    margin-left: -25px;
+    padding-left: 20px;
 }
 
-.gst-table {
-    margin-top: -17px;
-    padding-top: 10px !important;
-
-
+.billing-border{
+    border: 1px solid ;
+    /* margin-left: -22px; */
+    padding-left: 10px;    
+  
 }
 
-.dropdown-select {
-    margin-left: 20px;
-    /* padding-bottom: 15px; */
+.bill-border{
+    border: 1px solid ;
+    margin-left: -25px;
+    padding-left: 10px;
+    width: 108%;
 }
+.text-bold{
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.total-bill{
+    border: 1px solid ;
+    border-top: none;
+    margin-top: -33px; 
+    padding-top: 20px;
+    padding-left: 15px;
+    padding-right: 15px;
+    font-weight: bold;
+    
+}
+
+.bank-details{
+border: 1px solid;
+border-top: none;
+width: 100% !important;
+margin-top: -18px !important;
+padding-left: 15px;
+padding-right: 15px;
+padding-top: 20px;
+}
+
+
+.bill-div {
+    padding: 10px;
+    /* border: 1px solid rgb(222, 219, 219); */
+    /* border-color:  rgb(202, 194, 194) !important; */
+    border: 1px solid;
+    margin: auto !important;
+    width: 100% !important;
+  
+  }
+
+
+@media only screen and (max-width: 600px) {
+    .gst{
+        padding-bottom: 20px;
+        padding-left: 10px;
+        font-size: 15px;
+    }
+
+    .billing-border{
+        margin-top: 20px;
+        border: 1px solid ;
+        width: 100%;
+        /* margin-left: -22px; */
+        padding-left: 10px;
+    }
+
+    .bill-border{
+        border: 1px solid ;
+        margin-left: -0px;
+        /* padding-left: 10px; */
+        width: 100%;
+    }
+
+
+
+
+
+
+
+
+
+  }

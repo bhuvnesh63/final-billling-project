@@ -33,6 +33,13 @@ import UnitHistory from './components/Admin/Transaction/UnitHistory';
 import EditUnit from './components/Admin/UnitSale/Editunit';
 import BagSaleList from './components/Admin/Sale/BagSaleList';
 import UnitBilling from './components/Admin/Unitbilling/unitbilling';
+import EditUnitSale from './components/Admin/Sale/EditUnitSale';
+import GstUnitSale from './components/Admin/GstSale/GStUnitSale/gstunitsale';
+import GstBagSaleList from './components/Admin/GstSale/GStUnitSale/gstUnitSaleList';
+import GSTUnitBilling from './components/Admin/Unitbilling/gstunitbilling';
+import BagSaleHistory from './components/Admin/Transaction/Bagsalehistory';
+import GstEditSale from './components/Admin/GstSale/editgstsale';
+import GstUnitEditSale from './components/Admin/GstSale/GStUnitSale/editgstunitsale';
 
 
 
@@ -62,6 +69,7 @@ function App() {
         <Route path='/salelist' element={<PrivateRoute><Sidebar><SaleList /></Sidebar></PrivateRoute>} />
         <Route path='/unitsale' element={<PrivateRoute><Sidebar><BagSale/></Sidebar></PrivateRoute>} />
         <Route path='/editsale/:id' element={<PrivateRoute><Sidebar><EditSale /></Sidebar></PrivateRoute>} />
+        <Route path='/editunitsale/:id' element={<PrivateRoute><Sidebar><EditUnitSale /></Sidebar></PrivateRoute>} />
         <Route path='/additem' element={<PrivateRoute><Sidebar><Additem /></Sidebar></PrivateRoute>} />
         <Route path='/addunit' element={<PrivateRoute><Sidebar><AddUnit/></Sidebar></PrivateRoute>} />
         <Route path='/unitlist' element={<PrivateRoute><Sidebar><UnitList/></Sidebar></PrivateRoute>} />
@@ -69,6 +77,8 @@ function App() {
         <Route path='/edititem/:id' element={<PrivateRoute><Sidebar><EditItem /></Sidebar></PrivateRoute>} />
         <Route path='/itemlist' element={<PrivateRoute><Sidebar><Itemlist /></Sidebar></PrivateRoute>} />
         <Route path='/gstsale' element={<PrivateRoute><Sidebar><GstSale /></Sidebar></PrivateRoute>} />
+        <Route path='/gstunitsalelist' element={<PrivateRoute><Sidebar><GstBagSaleList/></Sidebar></PrivateRoute>} />
+        <Route path='/gstunitsale' element={<PrivateRoute><Sidebar><GstUnitSale/></Sidebar></PrivateRoute>} />
         <Route path='/gstsale-list' element={<PrivateRoute><Sidebar><GstSaleList /></Sidebar></PrivateRoute>} />
         <Route path='/addaccount' element={<PrivateRoute><Sidebar><AddAccount /></Sidebar></PrivateRoute>} />
         <Route path='/editaccount/:id' element={<PrivateRoute><Sidebar><EditAccount /></Sidebar></PrivateRoute>} />
@@ -77,13 +87,20 @@ function App() {
         <Route path='/billlist' element={<PrivateRoute><Sidebar><ListBilling /></Sidebar></PrivateRoute>} />
         <Route path='/gstbilllist' element={<PrivateRoute><Sidebar><GSTBillList /></Sidebar></PrivateRoute>} />
         <Route path='/gstbill/:id' element={<PrivateRoute><Sidebar><GSTBill /></Sidebar></PrivateRoute>} />
+        <Route path='/editgstsale/:id' element={<PrivateRoute><Sidebar><GstEditSale /></Sidebar></PrivateRoute>} />
         <Route path='/signup' element={<PrivateRoute><Sidebar><Signup /></Sidebar></PrivateRoute>} />
         <Route path='/purchasehistory' element={<PrivateRoute><Sidebar><Purchasetransaction/></Sidebar></PrivateRoute>} />
         <Route path='/salehistory' element={<PrivateRoute><Sidebar><SaleHistory/></Sidebar></PrivateRoute>} />
         <Route path='/gstsalehistory' element={<PrivateRoute><Sidebar><GSTSalehistory/></Sidebar></PrivateRoute>} />
         <Route path='/unithistory' element={<PrivateRoute><Sidebar><UnitHistory/></Sidebar></PrivateRoute>} />
-        <Route path='/unitalelist' element={<PrivateRoute><Sidebar><BagSaleList/></Sidebar></PrivateRoute>} />
+        <Route path='/unitsalelist' element={<PrivateRoute><Sidebar><BagSaleList/></Sidebar></PrivateRoute>} />
+        <Route path='/gstunitbilling/:id' element={<PrivateRoute><Sidebar><GSTUnitBilling/></Sidebar></PrivateRoute>} />
         <Route path='/unitbilling/:id' element={<PrivateRoute><Sidebar><UnitBilling/></Sidebar></PrivateRoute>} />
+        <Route path='/unitsalehistory' element={<PrivateRoute><Sidebar><BagSaleHistory/></Sidebar></PrivateRoute>} />
+    
+        <Route path='/editgstunitsale/:id' element={<PrivateRoute><Sidebar><GstUnitEditSale/></Sidebar></PrivateRoute>} />
+
+        
       </Routes>
 
     </div>
