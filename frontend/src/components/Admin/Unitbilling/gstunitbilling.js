@@ -57,7 +57,7 @@ const GSTUnitBilling = () => {
 
 
     // };
-    console.log("eee",gstunitorder)
+  
 
     if (!gstunitorder) return <div>Loading...</div>;
 
@@ -120,6 +120,8 @@ const GSTUnitBilling = () => {
                             <h3>M/S V K ENTERPRISES</h3>
                             <p>149, 0, Hanuman Nagar Near S.s.m School Linepar Majhola <br />
                                 Pachimi, Moradabad, Moradabad, Uttar Pradesh, 244001<br />
+                                Phone Number :- 8979836747<br />
+                               <span> GSTIN : 09IILPS7478M1ZU </span>
                             </p>
                         </div>
 
@@ -235,20 +237,11 @@ const GSTUnitBilling = () => {
                                 <Col sm={12}>
                                     <div className='bank-details'>
                                         <p className='text-bold'>Bank Details : </p>
-                                        <p  > BANK NAME :<span> PUNJAB NATIONAL BANK </span> </p>
-                                        <p >  IFSC : <span>PUNB0027872 A/C NO.54789654785158458 </span> </p>
+                                        <p  > BANK NAME :<span> PUNJAB NATIONAL BANK </span>    <span className='bank-detail'>IFSC : </span><span>PUNB0027872 A/C NO.54789654785158458 </span> </p>
+
                                     </div>
                                 </Col>
-                                <Col sm={12}>
-                                <div className='bank-details'>
-                                    <h5>Terms & Conditions</h5>
-                                    <p>E.& O.E.</p>
-                                    <p>1. Goods once sold will not be taken back.</p>
-                                    <p>2.Interest @ 18% p.a will be changed if the payment<br />
-                                        is not made with in the Stipulated time. </p>
-                                    <p>3. Subject to 'Uttar Pradesh' Jurisdiction only.</p>
-                                </div>
-                                </Col>
+                           
                             </Row>
                             {/* <Button variant="primary" onClick={handlePrint}>
                             Print Bill

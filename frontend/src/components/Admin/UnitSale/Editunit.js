@@ -55,7 +55,7 @@ const EditUnit = () => {
                         <tr>
                             <th>
                                 <h5>
-                                    <AiFillDashboard /> &nbsp;Dashboard / Edit Item
+                                    <AiFillDashboard /> &nbsp;Dashboard / Edit Unit
                                 </h5>
                             </th>
                         </tr>

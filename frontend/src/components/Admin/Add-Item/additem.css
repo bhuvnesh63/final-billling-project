@@ -7,3 +7,14 @@
 .note-text{
     color: red;
 }
+.checkpayment{
+    margin-left: 20px;
+}
+.grand-total-input{
+    margin-left: 20px;
+
+}
+.grand-total{
+    font-size: 18px;
+    font-weight: bold;
+}

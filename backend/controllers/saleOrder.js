@@ -105,6 +105,72 @@ exports.getAllBagsaleOrder = async (req, res) => {
 
 ///////////////////////////////////////////////////////////
 
+
+exports.getAllBagSale = async (req, res) => {
+
+    // const date1 = "2023-06-05T10:25:41.597+00:00";
+    // const date2 = "2023-08-05T10:25:41.597+00:00";
+
+    const date1 = new Date();
+    const date2 = date1.setMonth(date1.getMonth() - 1)
+    date1.setHours(0, 0, 0)
+    // console.log(new Date(), date1, "rishi")
+    const apiFeature = new ApiFeatures(BagSale.find(
+        {
+            createdDate: {
+                $gte: new Date(date1),
+                $lte: new Date()
+            }
+        }
+
+    ), req.query).search().filter();
+
+    const bagsaleorders = await apiFeature.query;
+
+    res.status(200).json({
+        success: true,
+        bagsaleorders,
+    });
+
+}
+/////////////////////////////////////////////////
+exports.getBagSaleDateilsByDate = async (req, res) => {
+
+    // const date1 = "2023-06-05T10:25:41.597+00:00";
+    // const date2 = "2023-08-05T10:25:41.597+00:00";
+    // console.log(req.params,"deep")
+    const startDate = req.params.startDate;
+    const endDate = req.params.endDate;
+    const date1 = new Date(startDate);
+    // const date2 = date1.setMonth(date1.getMonth() - 1)
+    const date2 = new Date(endDate)
+    // date1.setHours(0,0,0)
+
+    const apiFeature = new ApiFeatures(BagSale.find(
+        {
+            createdDate: {
+                $gte: date1,
+                $lte: date2
+            }
+        }
+
+    ), req.query).search().filter();
+
+    const bagsaleorders = await apiFeature.query;
+
+    res.status(200).json({
+        success: true,
+        bagsaleorders,
+    });
+
+}
+
+
+
+/////////////////////////////////////////////////
+
+
+
 exports.getAllBagSaleHistory = async (req, res) => {
 
     // const date1 = "2023-06-05T10:25:41.597+00:00";
@@ -161,6 +227,69 @@ exports.getAllSaleHistory = async (req, res) => {
     res.status(200).json({
         success: true,
         sale_history,
+    });
+
+}
+
+
+
+exports.getAllSalesbydate = async (req, res) => {
+
+    // const date1 = "2023-06-05T10:25:41.597+00:00";
+    // const date2 = "2023-08-05T10:25:41.597+00:00";
+
+    const date1 = new Date();
+    const date2 = date1.setMonth(date1.getMonth() - 1)
+    date1.setHours(0, 0, 0)
+    // console.log(new Date(), date1, "rishi")
+    const apiFeature = new ApiFeatures(SaleOrder.find(
+        {
+            createdDate: {
+                $gte: new Date(date1),
+                $lte: new Date()
+            }
+        }
+
+    ), req.query).search().filter();
+
+    const sale = await apiFeature.query;
+
+    res.status(200).json({
+        success: true,
+        sale,
+    });
+
+}
+
+///////////////////////////////////////////////////////
+
+exports.getSaleDateilsByDate = async (req, res) => {
+
+    // const date1 = "2023-06-05T10:25:41.597+00:00";
+    // const date2 = "2023-08-05T10:25:41.597+00:00";
+    // console.log(req.params,"deep")
+    const startDate = req.params.startDate;
+    const endDate = req.params.endDate;
+    const date1 = new Date(startDate);
+    // const date2 = date1.setMonth(date1.getMonth() - 1)
+    const date2 = new Date(endDate)
+    // date1.setHours(0,0,0)
+
+    const apiFeature = new ApiFeatures(SaleOrder.find(
+        {
+            createdDate: {
+                $gte: date1,
+                $lte: date2
+            }
+        }
+
+    ), req.query).search().filter();
+
+    const sale = await apiFeature.query;
+
+    res.status(200).json({
+        success: true,
+        sale,
     });
 
 }

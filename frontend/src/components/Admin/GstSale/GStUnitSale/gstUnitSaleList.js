@@ -59,7 +59,7 @@ const GstBagSaleList = () => {
                 <Table striped bordered hover className='main-table'>
                     <thead>
                         <tr>
-                            <th><h5><AiFillDashboard /> &nbsp; Dashboard/ Item-Details</h5></th>
+                            <th><h5><AiFillDashboard /> &nbsp; Dashboard/ GST Unit Sale List</h5></th>
                         </tr>
                     </thead>
                 </Table>
@@ -73,6 +73,12 @@ const GstBagSaleList = () => {
                                         <Button className="table-btn" variant="success" onClick={() => navigate("/unitsale")} >
                                             <IoIosCreate />&nbsp;
                                             New Unit Sale
+                                        </Button>
+
+
+                                        <Button className="table-btn total-sale" variant="success" onClick={() => navigate("/checktotalunitgstsale")} >
+                                            <IoIosCreate />&nbsp;
+                                         Check All GST Sale
                                         </Button>
                                         <span className="search-bar">
                                             Search
@@ -102,7 +108,7 @@ const GstBagSaleList = () => {
 
 
             <div className='form-div' >
-                <h5 className="w3-center w3-flat-midnight-blue w3-padding-48 w3-border-blue-grey w3-grey text text-center mb-5 mt-3">Item Details</h5>
+                <h5 className="w3-center w3-flat-midnight-blue w3-padding-48 w3-border-blue-grey w3-grey text text-center mb-5 mt-3">GST Unit Sale List</h5>
                 <Container>
                     <Row>
 

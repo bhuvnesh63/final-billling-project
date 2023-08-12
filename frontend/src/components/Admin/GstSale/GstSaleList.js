@@ -51,7 +51,7 @@ const GstSaleList = () => {
         <Table striped bordered hover >
           <thead>
             <tr>
-              <th><h5><AiFillDashboard /> &nbsp; Dashboard/ Add-Account-Details</h5></th>
+              <th><h5><AiFillDashboard /> &nbsp; Dashboard/ GST Sale List</h5></th>
             </tr>
           </thead>
         </Table>
@@ -64,6 +64,10 @@ const GstSaleList = () => {
                     <Button className="table-btn" variant="success" onClick={() => navigate("/gstsale")} >
                       <IoIosCreate />&nbsp;
                       New Sale
+                    </Button>
+                    <Button className="table-btn total-sale" variant="success" onClick={() => navigate("/checktotalgstsale")} >
+                      <IoIosCreate />&nbsp;
+              Check Total GST Sale
                     </Button>
                     <span className="search-bar">
                       Search
