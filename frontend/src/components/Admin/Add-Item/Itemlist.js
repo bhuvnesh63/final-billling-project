@@ -12,14 +12,18 @@ const ItemsUrl = "http://localhost:4000/api/v1/items"
 
 const Itemlist = ({ items }) => {
   const [getitems, setGetItems] = useState(null);
-  const navigate= useNavigate();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios.get(ItemsUrl).then((response) => {
       setGetItems(response.data)
       console.log(response)
     })
-  }, [getitems])
+  }, [])
+
+
+
 
   const deleteData = (id) => {
     // console.log(id)
@@ -51,16 +55,20 @@ const Itemlist = ({ items }) => {
               <tr>
                 <th>
                   <div className='table-div' >
-                  <Button className="table-btn" variant="success" onClick={()=> navigate("/additem")} >
+                    <Button className="table-btn checkpayment" variant="success" onClick={() => navigate("/checkpayment")} >
                       <IoIosCreate />&nbsp;
-                      Add New Item
+                      Check Payment
+                    </Button>
+                 
+                    
+
+                    <Button className="table-btn float-end" variant="success" onClick={() => navigate("/purchasehistory")} >
+                      <IoIosCreate />&nbsp;
+                      Check Purchase History
                     </Button>
 
-                    <Button className="table-btn float-end" variant="success" onClick={()=> navigate("/purchasehistory")} >
-                      <IoIosCreate />&nbsp;
-                       Check Purchase History
-                    </Button>
                   
+
                   </div>
                 </th>
               </tr>
@@ -115,22 +123,21 @@ const Itemlist = ({ items }) => {
                       <td>{items.PurchasingPrice}</td>
                       <td>{items.totalGST}</td>
                       <td>{items.pricewithoutgst}</td>
-                    
+
                       <td>
 
                         <Link to={`/edititem/${items._id}`}>
-                          <Button className='table-btn' 
-                          variant="success" >
+                          <Button className='table-btn'
+                            variant="success" >
                             &#9998;Edit
                           </Button>
                         </Link>
                       </td>
                       <td>
                         <Button className='table-btn'
-                         variant="success" onClick={(e) => 
-                          { deleteData(items._id) }} value={"Delete"}
+                          variant="success" onClick={(e) => { deleteData(items._id) }} value={"Delete"}
                         >
-                        <span className='delete-icon'>&#x2717;</span>Delete
+                          <span className='delete-icon'>&#x2717;</span>Delete
                         </Button>
                       </td>
                       {/* <td>
@@ -147,7 +154,7 @@ const Itemlist = ({ items }) => {
                         {...user}
                       />
                     )} */}
-                    
+
                     </tr>
                   ))}
 

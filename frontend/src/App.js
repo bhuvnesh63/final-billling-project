@@ -40,6 +40,11 @@ import GSTUnitBilling from './components/Admin/Unitbilling/gstunitbilling';
 import BagSaleHistory from './components/Admin/Transaction/Bagsalehistory';
 import GstEditSale from './components/Admin/GstSale/editgstsale';
 import GstUnitEditSale from './components/Admin/GstSale/GStUnitSale/editgstunitsale';
+import CheckTotal from './components/Admin/Add-Item/checktotalamount';
+import SaleListPayment from './components/Admin/Sale/checksalepayment';
+import BagUnitSaleList from './components/Admin/Sale/CheckUnitSale';
+import GstTotalSaleList from './components/Admin/GstSale/CheckTotalgstsale';
+import CheckTotalGstBagSaleList from './components/Admin/GstSale/GStUnitSale/Checkallgstunitsale';
 
 
 
@@ -97,7 +102,15 @@ function App() {
         <Route path='/gstunitbilling/:id' element={<PrivateRoute><Sidebar><GSTUnitBilling/></Sidebar></PrivateRoute>} />
         <Route path='/unitbilling/:id' element={<PrivateRoute><Sidebar><UnitBilling/></Sidebar></PrivateRoute>} />
         <Route path='/unitsalehistory' element={<PrivateRoute><Sidebar><BagSaleHistory/></Sidebar></PrivateRoute>} />
-    
+        <Route path='/checkpayment' element={<PrivateRoute><Sidebar><CheckTotal/></Sidebar></PrivateRoute>} />
+        <Route path='/checksalepayment' element={<PrivateRoute><Sidebar><SaleListPayment/></Sidebar></PrivateRoute>} />
+        <Route path='/checkunitsale' element={<PrivateRoute><Sidebar><BagUnitSaleList/></Sidebar></PrivateRoute>} />
+
+        <Route path='/checktotalgstsale' element={<PrivateRoute><Sidebar><GstTotalSaleList/></Sidebar></PrivateRoute>} />
+
+        <Route path='/checktotalunitgstsale' element={<PrivateRoute><Sidebar><CheckTotalGstBagSaleList/></Sidebar></PrivateRoute>} />
+
+       
         <Route path='/editgstunitsale/:id' element={<PrivateRoute><Sidebar><GstUnitEditSale/></Sidebar></PrivateRoute>} />
 
         

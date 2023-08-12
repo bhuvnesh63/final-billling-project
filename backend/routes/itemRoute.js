@@ -1,6 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const { getAllitems, createItem, updateitem, deleteItem, getItemDetail ,getAllPurchase,getPurchaseDetailsByDate} = require("../controllers/itemController");
+const { getAllitems, createItem, getAllitemsbydate,updateitem, deleteItem, getItemDetail ,getAllPurchase,getPurchaseDetailsByDate, getItemDetailsByDate} = require("../controllers/itemController");
 
 // const multer = require("multer")
 // const upload = multer({ }); 
@@ -37,6 +37,11 @@ item_route.post('/item/new', createItem)
 
 item_route.get("/items", getAllitems);
 item_route.get("/purchaseorders", getAllPurchase);
+
+item_route.get("/itemsbydate",getAllitemsbydate);
+
+item_route.get("/itembydate/:startDate/:endDate",getItemDetailsByDate);
+
 item_route.get("/purchaseorder/:startDate/:endDate", getPurchaseDetailsByDate);
 // router.route("/item/new").post(createItem, upload.single("image"));
 item_route.get("/item/:id", getItemDetail)

@@ -2,6 +2,9 @@
 const mongoose = require("mongoose");
 
 const itemSchema = new mongoose.Schema({
+    createdDate: {
+        type: Date,
+    },
 
     itemName: {
         type: String,
@@ -37,8 +40,8 @@ const itemSchema = new mongoose.Schema({
         type: Number,
     },
 
-  
-  
+
+
     // image: {
     //     type:String
     //   },

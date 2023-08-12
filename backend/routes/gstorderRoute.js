@@ -14,6 +14,9 @@ const {
   getGstUnitOrderDetail,
   updateGstBagSaleOrder,
   deleteGstUnitOrder,
+  getAllGSTSalewithdate,
+  getAllGSTSAleDetailsByDate,
+  getAllGSTUnitSalewithdate,
 
 } = require("../controllers/gstorderController");
 
@@ -28,7 +31,12 @@ router.route("/gstorder/new").post(createOrder);
 // router.route("/order/status/:id").put(updateOrderStatus);
 router.route("/gstorder/:id").put(updateOrder).delete(deleteOrder).get(getOrderDetail);
 
+router.get("/allgstsales",getAllGSTSalewithdate);
+router.get("/allgstsalebydate/:startDate/:endDate", getAllGSTSAleDetailsByDate);
 
+
+router.get("/allgstunitssales" ,getAllGSTUnitSalewithdate);
+router.get("/allunitgstsalebydate/:startDate/:endDate", getAllGSTSAleDetailsByDate);
 
 
 router.route("/gstunitorder/new").post(createUnitSaleOrder);

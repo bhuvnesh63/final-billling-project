@@ -22,6 +22,7 @@ const Additem = () => {
   const [sgstPerItem, setSgstPerItem] = useState("");
   const [totalGST, setTotalGST] = useState("");
   const [pricewithoutgst, setPricewithoutgst] = useState("");
+  const [createdDate, setCreatedDate]=useState("");
 
 
   const navigate = useNavigate();
@@ -54,6 +55,7 @@ const Additem = () => {
     event.preventDefault();
     try {
       await axios.post("http://localhost:4000/api/v1/item/new", {
+        "createdDate":createdDate,
         "itemName": itemName,
         "sellingPrice": sellingPrice,
         "totalamount": totalamount,

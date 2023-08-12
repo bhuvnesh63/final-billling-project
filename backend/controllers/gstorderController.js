@@ -99,6 +99,69 @@ exports.getAllUnitSaleOrder = async (req, res) => {
 ///////////////////////////////////////////////////////
 
 
+exports.getAllGSTSalewithdate = async (req, res) => {
+
+    // const date1 = "2023-06-05T10:25:41.597+00:00";
+    // const date2 = "2023-08-05T10:25:41.597+00:00";
+
+    const date1 = new Date();
+    const date2 = date1.setMonth(date1.getMonth() - 1)
+    date1.setHours(0, 0, 0)
+    // console.log(new Date(), date1, "rishi")
+    const apiFeature = new ApiFeatures(Order.find(
+        {
+            createdDate: {
+                $gte: new Date(date1),
+                $lte: new Date()
+            }
+        }
+
+    ), req.query).search().filter();
+
+    const orders = await apiFeature.query;
+
+    res.status(200).json({
+        success: true,
+        orders,
+    });
+
+}
+
+
+/////////////////////////////////////////////////////////////
+exports.getAllGSTSAleDetailsByDate = async (req, res) => {
+
+    // const date1 = "2023-06-05T10:25:41.597+00:00";
+    // const date2 = "2023-08-05T10:25:41.597+00:00";
+    // console.log(req.params,"deep")
+    const startDate = req.params.startDate;
+    const endDate = req.params.endDate;
+    const date1 = new Date(startDate);
+    // const date2 = date1.setMonth(date1.getMonth() - 1)
+    const date2 = new Date(endDate)
+    // date1.setHours(0,0,0)
+
+    const apiFeature = new ApiFeatures(Order.find(
+        {
+            createdDate: {
+                $gte: date1,
+                $lte: date2
+            }
+        }
+
+    ), req.query).search().filter();
+
+    const orders = await apiFeature.query;
+
+    res.status(200).json({
+        success: true,
+        orders,
+    });
+
+}
+
+//////////////////////////////////////////////////////////
+
 exports.getGSTSaleHistory = async (req, res) => {
 
     // const date1 = "2023-06-05T10:25:41.597+00:00";
@@ -130,6 +193,69 @@ exports.getGSTSaleHistory = async (req, res) => {
 
 
 
+exports.getAllGSTUnitSalewithdate = async (req, res) => {
+
+    // const date1 = "2023-06-05T10:25:41.597+00:00";
+    // const date2 = "2023-08-05T10:25:41.597+00:00";
+
+    const date1 = new Date();
+    const date2 = date1.setMonth(date1.getMonth() - 1)
+    date1.setHours(0, 0, 0)
+    // console.log(new Date(), date1, "rishi")
+    const apiFeature = new ApiFeatures(GSTUnitOrder.find(
+        {
+            createdDate: {
+                $gte: new Date(date1),
+                $lte: new Date()
+            }
+        }
+
+    ), req.query).search().filter();
+
+    const GStUnitorders = await apiFeature.query;
+
+    res.status(200).json({
+        success: true,
+        GStUnitorders,
+    });
+
+}
+
+
+
+////////////////////////////////////////////////////////////////
+exports.getAllGSTSAleDetailsByDate = async (req, res) => {
+
+    // const date1 = "2023-06-05T10:25:41.597+00:00";
+    // const date2 = "2023-08-05T10:25:41.597+00:00";
+    // console.log(req.params,"deep")
+    const startDate = req.params.startDate;
+    const endDate = req.params.endDate;
+    const date1 = new Date(startDate);
+    // const date2 = date1.setMonth(date1.getMonth() - 1)
+    const date2 = new Date(endDate)
+    // date1.setHours(0,0,0)
+
+    const apiFeature = new ApiFeatures(GSTUnitOrder.find(
+        {
+            createdDate: {
+                $gte: date1,
+                $lte: date2
+            }
+        }
+
+    ), req.query).search().filter();
+
+    const GStUnitorders = await apiFeature.query;
+
+    res.status(200).json({
+        success: true,
+        GStUnitorders,
+    });
+
+}
+
+////////////////////////////////////////////////////////////////
 
 exports.getGSTUnitSaleHistory = async (req, res) => {
 
